@@ -2,6 +2,14 @@
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
+---
+
+## Backend Documentation
+
+For a comprehensive guide to the backend API, features, authentication, and architecture, see [SERVER_DOCS.md](./server/SERVER_DOCS.md).
+
+---
+
 ## Setup
 
 Make sure to install dependencies:
