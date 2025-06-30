@@ -1,5 +1,7 @@
 <template>
-  <li class="w-full flex flex-col justify-start glass-card p-0 group overflow-hidden hover:scale-102 hover:translate-y-[-5px] transition-all duration-300">
+  <li
+    class="w-full flex flex-col justify-start glass-card p-0 group overflow-hidden hover:scale-102 hover:translate-y-[-5px] transition-all duration-300"
+  >
     <figure class="relative h-[225px]">
       <nuxt-img
         :src="event.image"
@@ -42,7 +44,7 @@
       >
         {{ event.description }}
       </p>
-      <ul class="grid grid-cols-1 gap-1.5 mt-3">
+      <ul class="grid grid-cols-1 gap-1.5 mt-auto pt-3">
         <li
           class="text-sm text-muted-foreground flex items-center gap-2 overflow-hidden"
         >

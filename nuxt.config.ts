@@ -44,4 +44,13 @@ export default defineNuxtConfig({
      */
     componentDir: "~/components/ui",
   },
+
+  routeRules: {
+    "/dashboard/events/create": {
+      ssr: false, // Disable SSR for this page
+    },
+    "/dashboard/events/create/**": {
+      ssr: false, // Disable SSR for all nested routes
+    },
+  },
 });

@@ -21,30 +21,67 @@
         </h3>
       </div>
     </figure>
-    <div class="w-full flex items-center justify-between gap-4 py-2 px-4">
-      <ul class="flex items-center justify-start gap-5">
-        <li class="flex items-center justify-start gap-2">
-          <Icon name="mdi:calendar" class="text-2xl text-text-primary" />
-          <p class="text-sm font-medium text-text-secondary">
+    <div class="w-full flex items-center justify-between gap-4 p-4">
+      <ul
+        class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-start gap-5 bg-primary px-3 py-2 rounded-sm"
+      >
+        <li class="flex items-center justify-start gap-2 max-w-full">
+          <Icon name="mdi:calendar" class="text-2xl text-accent shrink-0" />
+          <p
+            class="text-xs font-semibold capitalize text-text-secondary max-w-full overflow-hidden text-ellipsis"
+          >
             {{ dateFormatter(eventDetails?.data?.start_at) }}
           </p>
         </li>
-        <li class="flex items-center justify-start gap-2">
-          <Icon name="mdi:calendar-range" class="text-2xl text-text-primary" />
-          <p class="text-sm font-medium text-text-secondary">
+        <li class="flex items-center justify-start gap-2 max-w-full">
+          <Icon
+            name="mdi:calendar-range"
+            class="text-2xl text-accent shrink-0"
+          />
+          <p
+            class="text-xs font-semibold capitalize text-text-secondary max-w-full overflow-hidden text-ellipsis"
+          >
             {{ dateFormatter(eventDetails?.data?.end_at) }}
           </p>
         </li>
-        <li class="flex items-center justify-start gap-2">
-          <Icon name="mdi:location" class="text-2xl text-text-primary" />
-          <p class="text-sm font-medium text-text-secondary">
+        <li
+          v-if="eventDetails?.data?.location_type === LocationType.OFFLINE"
+          class="flex items-center justify-start gap-2 max-w-full"
+        >
+          <Icon name="mdi:location" class="text-2xl text-accent shrink-0" />
+          <p
+            class="text-xs font-semibold capitalize text-center text-text-secondary max-w-full overflow-hidden text-ellipsis"
+          >
             {{ eventDetails?.data?.location }}
           </p>
         </li>
-        <li class="flex items-center justify-start gap-2">
-          <Icon name="mdi:ticket" class="text-2xl text-text-primary" />
-          <p class="text-sm font-medium text-text-secondary">
-            {{ eventDetails?.data?.capacity }}
+        <li class="flex items-center justify-start gap-2 max-w-full">
+          <Icon name="mdi:users" class="text-2xl text-accent shrink-0" />
+          <p
+            class="text-xs font-semibold capitalize text-center text-text-secondary max-w-full overflow-hidden text-ellipsis"
+          >
+            {{ eventDetails?.data?.capacity }} attendees
+          </p>
+        </li>
+        <li
+          v-if="eventDetails?.data?.location_type === LocationType.ONLINE"
+          class="flex items-center justify-start gap-2 max-w-full"
+        >
+          <Icon name="mdi:link" class="text-2xl text-accent shrink-0" />
+          <nuxt-link
+            :href="eventDetails?.data?.location"
+            class="flex items-center gap-1 text-xs font-semibold capitalize text-text-secondary max-w-full overflow-hidden text-ellipsis"
+          >
+            <p>go to event</p>
+            <Icon name="mdi:open-in-new" class="text-base" />
+          </nuxt-link>
+        </li>
+        <li class="flex items-center justify-start gap-2 max-w-full">
+          <Icon name="mdi:users" class="text-2xl text-accent shrink-0" />
+          <p
+            class="text-xs font-semibold capitalize text-text-secondary max-w-full overflow-hidden text-ellipsis"
+          >
+            {{ eventDetails?.data?.capacity }} attendees
           </p>
         </li>
       </ul>
@@ -96,15 +133,20 @@
         <li
           class="w-full flex items-start justify-start flex-col gap-2 p-4 rounded-sm bg-card border border-border shadow-sm"
         >
-          <h3 class="text-2xl font-semibold text-text-primary">description</h3>
+          <h3 class="text-xl capitalize font-semibold text-text-primary">
+            description
+          </h3>
           <p class="text-sm font-medium text-text-secondary">
             {{ eventDetails?.data?.description }}
           </p>
         </li>
         <li
+          v-if="eventDetails?.data?.location_type === LocationType.OFFLINE"
           class="w-full flex items-start justify-start flex-col gap-2 p-4 rounded-sm bg-card border border-border shadow-sm"
         >
-          <h3 class="text-2xl font-semibold text-text-primary">Location</h3>
+          <h3 class="text-xl capitalize font-semibold text-text-primary">
+            Location
+          </h3>
           <p class="text-sm font-medium text-text-secondary">
             {{ eventDetails?.data?.location }}
           </p>
@@ -112,9 +154,40 @@
             Nasr City, Cairo, Egypt
           </p> -->
           <div
-            class="w-full h-48 bg-background/50 backdrop-blur-md rounded-sm text-center p-4"
+            class="w-full h-[260px] bg-background/50 backdrop-blur-md rounded-lg overflow-hidden text-center"
           >
-            <p>maps placeholder</p>
+            <AppLeafletMaps
+              :selectedLocation="{
+                lat: eventDetails?.data?.latitude,
+                lng: eventDetails?.data?.longitude,
+              }"
+            />
+          </div>
+        </li>
+        <li
+          v-if="eventDetails?.data?.location_type === LocationType.ONLINE"
+          class="w-full flex items-start justify-start flex-col gap-2 p-4 rounded-sm bg-card border border-border shadow-sm"
+        >
+          <h3 class="text-xl capitalize font-semibold text-text-primary">
+            event link
+          </h3>
+          <p class="text-sm font-medium text-text-secondary">
+            this event is online, you can join it using the link below
+          </p>
+          <div
+            class="w-full h-48 flex items-center justify-center flex-col bg-accent/10 backdrop-blur-md rounded-sm text-center p-4"
+          >
+            <span
+              class="flex items-center justify-center bg-accent/40 w-fit p-4 rounded-full aspect-square m-auto"
+            >
+              <Icon name="mdi:link" class="text-4xl text-accent" />
+            </span>
+            <nuxt-link
+              :href="eventDetails?.data?.location"
+              class="text-sm font-medium text-accent mt-4 bg-accent/20 p-2 rounded-sm"
+            >
+              {{ eventDetails?.data?.location }}
+            </nuxt-link>
           </div>
         </li>
       </ul>
@@ -133,7 +206,7 @@
               class="flex items-start justify-start gap-3.5"
             >
               <p
-                class="text-base min-w-20 font-medium capitalize text-text-primary"
+                class="text-sm min-w-20 font-medium capitalize text-text-primary"
               >
                 type:
               </p>
@@ -148,31 +221,34 @@
             </li>
             <li class="flex items-start justify-start gap-3.5">
               <p
-                class="text-base min-w-20 font-medium capitalize text-text-primary"
+                class="text-sm min-w-20 font-medium capitalize text-text-primary"
               >
                 start date:
               </p>
-              <p class="text-base font-medium capitalize text-text-secondary">
+              <p class="text-sm font-medium capitalize text-text-secondary">
                 {{ dateFormatter(eventDetails?.data?.start_at) }}
               </p>
             </li>
             <li class="flex items-start justify-start gap-3.5">
               <p
-                class="text-base min-w-20 font-medium capitalize text-text-primary"
+                class="text-sm min-w-20 font-medium capitalize text-text-primary"
               >
                 end date:
               </p>
-              <p class="text-base font-medium capitalize text-text-secondary">
+              <p class="text-sm font-medium capitalize text-text-secondary">
                 {{ dateFormatter(eventDetails?.data?.end_at) }}
               </p>
             </li>
-            <li class="flex items-start justify-start gap-3.5">
+            <li
+              v-if="eventDetails?.data?.location_type === LocationType.OFFLINE"
+              class="flex items-start justify-start gap-3.5"
+            >
               <p
-                class="text-base min-w-20 font-medium capitalize text-text-primary"
+                class="text-sm min-w-20 font-medium capitalize text-text-primary"
               >
                 location:
               </p>
-              <p class="text-base font-medium capitalize text-text-secondary">
+              <p class="text-sm font-medium capitalize text-text-secondary">
                 {{ eventDetails?.data?.location }}
               </p>
             </li>
@@ -181,25 +257,25 @@
               class="flex items-start justify-start gap-3.5"
             >
               <p
-                class="text-base min-w-20 font-medium capitalize text-text-primary"
+                class="text-sm min-w-20 font-medium capitalize text-text-primary"
               >
                 organizer:
               </p>
-              <p class="text-base font-medium capitalize text-text-secondary">
+              <p class="text-sm font-medium capitalize text-text-secondary">
                 {{ eventDetails?.data?.company_id }}
               </p>
-              <p class="text-base font-medium capitalize text-text-secondary">
+              <p class="text-sm font-medium capitalize text-text-secondary">
                 {{ eventDetails?.data?.created_by }}
               </p>
             </li>
             <li class="flex items-start justify-start gap-3.5">
               <p
-                class="text-base min-w-20 font-medium capitalize text-text-primary"
+                class="text-sm min-w-20 font-medium capitalize text-text-primary"
               >
                 created by:
               </p>
-              <p class="text-base font-medium capitalize text-text-secondary">
-                {{ eventDetails?.data?.created_by }}
+              <p class="text-sm font-medium capitalize text-text-secondary">
+                {{ eventDetails?.data?.creator_name }}
               </p>
             </li>
           </ul>
@@ -207,7 +283,9 @@
         <li
           class="w-full flex items-start justify-start flex-col gap-2 p-4 rounded-sm bg-card border border-border shadow-sm"
         >
-          <h3 class="text-2xl font-semibold text-text-primary mb-4 capitalize">
+          <h3
+            class="text-xl capitalize font-semibold text-text-primary mb-4 capitalize"
+          >
             event stats
           </h3>
           <p class="text-sm font-medium text-text-secondary">
@@ -220,21 +298,27 @@
               <p class="text-3xl font-bold capitalize text-text-primary">
                 {{ eventDetails?.data?.capacity }}
               </p>
-              <p class="text-sm font-medium capitalize text-text-secondary">
+              <p
+                class="text-sm font-medium text-center capitalize text-text-secondary"
+              >
                 Total Attendees
               </p>
             </div>
             <div
               class="w-full flex flex-col bg-background/90 backdrop-blur-md rounded-sm items-center justify-start gap-2 p-4"
             >
-              <p class="text-3xl font-bold capitalize text-text-primary">70</p>
-              <p class="text-sm font-medium capitalize text-text-secondary">
+              <p class="text-3xl font-bold capitalize text-text-primary">
+                {{ eventRegistrations?.data?.length || 0 }}
+              </p>
+              <p
+                class="text-sm text-center font-medium capitalize text-text-secondary"
+              >
                 confirmed
               </p>
             </div>
           </div>
           <div class="w-full flex items-center justify-start gap-2 mt-4">
-            <LazyEventsAttendeesModal>
+            <LazyEventsAttendeesModal :registrations="eventRegistrations?.data">
               <template #trigger>
                 <UiButton type="button" class="w-full">
                   <Icon name="mdi:account-multiple" class="w-4 h-4" />
@@ -257,7 +341,9 @@ import { ResponseSchema } from "~/server/utils/response-schema";
 import { toast } from "vue-sonner";
 import type { TicketType } from "~/types/tickets";
 import useEventDetailsState from "~/composables/use-event-details-state";
-
+import type { ResponseSchemaTypeWithPagination } from "~/server/utils/response-schema";
+import type { Registration } from "~/types/registerations";
+import { LocationType } from "~/types/events";
 const route = useRoute();
 const eventId = computed(() => route.params.eventId);
 const ticketModal = shallowRef(false);
@@ -289,6 +375,15 @@ const { data: ticketTypes, error } = useAsyncData<
     method: "GET",
   })
 );
+
+const { data: eventRegistrations, execute: executeRegistrations } =
+  useAsyncData(
+    `${QUERY_KEYS.EVENT_REGISTRATIONS}__${eventId.value}`,
+    () => useRequestFetch()(`/api/registrations/${eventId.value}`),
+    {
+      watch: [eventId],
+    }
+  );
 
 const handleBuyTicket = (ticket: TicketType | null) => {
   handleSetSelectedTicketType(ticket);

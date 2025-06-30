@@ -86,26 +86,17 @@
     <!-- MAPs  -->
     <div
       v-if="form.location_type === LocationType.OFFLINE"
-      class="col-span-2 w-full min-h-[22rem] bg-secondary/50 p-2 flex items-center justify-center"
+      class="flex w-full min-h-[22rem] bg-secondary/50 p-2 flex items-center justify-center col-span-2"
     >
-      <LMap
-        style="height: 350px, width: 400px;"
-        :zoom="6"
-        :center="[47.21322, -1.559482]"
-        :use-global-leaflet="false"
-      >
-        <LTileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&amp;copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
-          layer-type="base"
-          name="OpenStreetMap"
-        />
-      </LMap>
-      <span class="flex flex-col items-center justify-center w-full">
+      <AppLeafletMaps
+        class="h-full rounded-lg"
+        v-model="form.location_coordinates"
+      />
+      <span class="flex flex-col items-center justify-center w-full p-4">
         <h3 class="secondary-text text-lg mt-2">
           Please select the location on the map above.
         </h3>
-        <p class="secondary-text text-sm mt-1">
+        <p class="secondary-text text-sm mt-1 text-center">
           Note: This feature is not yet implemented, but will be available soon.
           <br />
           You can still enter the location manually in the input field above.
@@ -155,6 +146,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { reverseGeocode } from "~/services/maps/helpers";
 import { EventType, LocationType } from "~/types/events";
 
 defineOptions({
@@ -171,7 +163,37 @@ const form = ref({
   event_type: EventType.EVENT,
   location: "",
   location_type: LocationType.OFFLINE,
+  location_coordinates: {
+    lat: 31.19555225,
+    lng: 29.938382000000004,
+  },
 });
+
+const location = ref<{ lat: number; lng: number }>({
+  lat: 31.19555225,
+  lng: 29.938382000000004,
+});
+
+const { data: addressDetails } = useAsyncData(
+  "addressDetails",
+  async () => {
+    const { lat, lng } = form.value.location_coordinates;
+    return await reverseGeocode(lat, lng);
+  },
+  {
+    immediate: true,
+    watch: [() => form.value.location_coordinates],
+  }
+);
+
+watch(
+  addressDetails,
+  (newAddressDetails) => {
+    if (!newAddressDetails) return;
+    form.value.location = newAddressDetails;
+  },
+  { immediate: true, deep: true }
+);
 
 const emit = defineEmits<{
   (

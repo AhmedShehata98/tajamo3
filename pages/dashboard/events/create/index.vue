@@ -14,8 +14,6 @@
           v-if="
             $route.query.step === FormStepEnum.BASIC_INFO || !$route.query.step
           "
-          :form="form"
-          :form-blured="formBLured"
           @back="
             $router.push({
               query: { step: FormStepEnum.FINAL_EVENT_CREATE },
@@ -23,18 +21,20 @@
           "
           @next="handleSetBasicInfo"
         />
-        <EventsCreateStepsTypeAndLocation
-          v-if="
-            $route.query.step === FormStepEnum.TYPE_AND_LOCATION &&
-            $route.query.step
-          "
-          @back="
-            $router.push({
-              query: { step: FormStepEnum.BASIC_INFO },
-            })
-          "
-          @next="handleSetEventTypeAndLocation"
-        />
+        <ClientOnly>
+          <EventsCreateStepsTypeAndLocation
+            v-if="
+              $route.query.step === FormStepEnum.TYPE_AND_LOCATION &&
+              $route.query.step
+            "
+            @back="
+              $router.push({
+                query: { step: FormStepEnum.BASIC_INFO },
+              })
+            "
+            @next="handleSetEventTypeAndLocation"
+          />
+        </ClientOnly>
         <EventsCreateStepsSchedule
           v-if="
             $route.query.step === FormStepEnum.SCHEDULE && $route.query.step
@@ -116,6 +116,7 @@ const finalEventForm = ref<Omit<
 const eventFormBuilder = useEventFormBuilder();
 const ticketsList = ref<TicketTypeForm[]>([]);
 const eventCreatedId = ref<number | undefined>(undefined);
+
 const user = useUser();
 const { execute, data, error, pending, success } = useApiMutation();
 const timeoutRefs: NodeJS.Timeout[] = [];
@@ -139,11 +140,17 @@ const handleSetEventTypeAndLocation = (event: {
   event_type: EventType;
   location: string;
   location_type: LocationType;
+  location_coordinates: {
+    lat: number;
+    lng: number;
+  };
 }) => {
   eventFormBuilder
     .setEventType(event.event_type)
     .setLocation(event.location)
-    .setLocationType(event.location_type);
+    .setLocationType(event.location_type)
+    .setLatitude(event.location_coordinates.lat)
+    .setLongitude(event.location_coordinates.lng);
 
   navigateTo({
     query: { step: FormStepEnum.SCHEDULE },

@@ -14,7 +14,7 @@
       </UiDialogHeader>
       <ul class="grid grid-cols-1 items-center justify-center gap-x-4 py-4">
         <EventsAttendeesModalAttendeesItem
-          v-for="item in eventRegistrations.data"
+          v-for="item in registrations"
           :key="item"
           :data="item"
         />
@@ -24,19 +24,11 @@
 </template>
 <script setup lang="ts">
 import { QUERY_KEYS } from "~/constants/query-keys";
-import type { ResponseSchemaTypeWithPagination } from "~/server/utils/response-schema";
-import type { Registration } from "~/types/registerations";
 
 const eventId = computed(() => useRoute().params.eventId);
 const attendeesRef = ref<HTMLDialogElement | null>(null);
 
-const { data: eventRegistrations } = useAsyncData(
-  `${QUERY_KEYS.EVENT_REGISTRATIONS}__${eventId.value}`,
-  () => useRequestFetch()(`/api/registrations/${eventId.value}`),
-  {
-    watch: [eventId],
-  }
-);
-
-console.log("eventRegistrations: ", eventRegistrations?.value);
+defineProps<{
+  registrations: Registration;
+}>();
 </script>

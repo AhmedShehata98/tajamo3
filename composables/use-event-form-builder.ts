@@ -27,6 +27,8 @@ class EventFormBuilder {
       location_type: LocationType.OFFLINE,
       company_id: null,
       audience: AudienceType.PUBLIC,
+      latitude: null,
+      longitude: null,
       created_at: new Date().toISOString(),
     });
     this._formBlurred = reactive<Record<string, boolean>>({});
@@ -62,6 +64,14 @@ class EventFormBuilder {
   }
   setLocation(location: string) {
     this._form.location = location;
+    return this;
+  }
+  setLatitude(latitude: number) {
+    this._form.latitude = latitude;
+    return this;
+  }
+  setLongitude(longitude: number) {
+    this._form.longitude = longitude;
     return this;
   }
   setLocationType(locationType: LocationType) {

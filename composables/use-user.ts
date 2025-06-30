@@ -43,17 +43,6 @@ const useUser = () => {
     lazy: userStore.value !== null,
   });
 
-  watch(
-    cookies,
-    (newCookies) => {
-      if (!newCookies && status.value !== "success") {
-        userStore.value = null;
-        navigateTo("/");
-      }
-    },
-    { immediate: true }
-  );
-
   return {
     logout,
     userStore,

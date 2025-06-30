@@ -12,6 +12,8 @@ export type Event = {
   event_type: EventType;
   capacity: number;
   audience: AudienceType;
+  longitude?: number;
+  latitude?: number;
   company_id: number | null;
   created_by: number;
 };
