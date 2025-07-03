@@ -49,8 +49,8 @@
     <UiFormGroup
       label="description"
       id="description"
-      :error-condition="formBLured.description && !form.description"
-      error-message="the description is required !"
+      :error-condition="false"
+      error-message=""
       direction="col"
       class="col-span-2"
     >
@@ -59,7 +59,6 @@
         id="description"
         rows="6"
         v-model="form.description"
-        @blur="() => (formBLured.description = true)"
         class="input"
         placeholder="enter the event description ..."
       ></textarea>
@@ -78,6 +77,7 @@
             description: form.description,
           })
         "
+        :disabled="!form.name || !form.image"
       >
         <p class="text-white text-sm">Next</p>
         <Icon name="i-heroicons-arrow-right-solid" />
@@ -92,7 +92,6 @@ import { ref } from "vue";
 const formBLured = ref({
   eventName: false,
   eventImage: false,
-  description: false,
 });
 
 const form = ref({

@@ -20,6 +20,21 @@ export default defineEventHandler(async (event) => {
           true,
           "ticket fetched successfully"
         );
+      case "DELETE":
+        const deletedTicket = await ticketTypes.removeTicketTypeById(
+          Number(ticketId)
+        );
+        if (!deletedTicket) {
+          throw createError({
+            statusCode: 404,
+            statusMessage: "Ticket type not found",
+          });
+        }
+        return new ResponseSchema(
+          deletedTicket,
+          true,
+          "ticket type deleted successfully"
+        );
       default:
         throw new Error("Method not allowed");
     }

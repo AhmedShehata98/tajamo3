@@ -97,9 +97,8 @@ export default defineEventHandler(async (h3Event) => {
     });
   } catch (error) {
     return createError({
-      statusCode: error instanceof Error ? error.statusCode : 500,
-      statusMessage:
-        error instanceof Error ? error.message : "Internal Server Error",
+      statusCode: 500,
+      statusMessage: error instanceof Error ? error.message : error.toString(),
     });
   }
 });

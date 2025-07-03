@@ -65,7 +65,7 @@
     </UiFormGroup>
 
     <div class="flex-1 col-span-2 flex items-center justify-end gap-3 mt-8">
-      <UiButton type="submit">
+      <UiButton type="submit" :disabled="!form.capacity || form.capacity <= 0">
         Next
         <Icon name="i-heroicons-arrow-right-solid" />
       </UiButton>

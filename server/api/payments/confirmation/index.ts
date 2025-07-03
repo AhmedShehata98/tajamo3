@@ -11,6 +11,8 @@ export default defineEventHandler(async (event) => {
           paymentId: string;
         }
       >(event);
+
+      console.log("api/payments/confirmation :: body ", body);
       const userPhoneNumber = body.obj.order.shipping_data.phone_number;
 
       const user = await users.getUserByPhone(userPhoneNumber);
@@ -22,39 +24,7 @@ export default defineEventHandler(async (event) => {
         });
       }
 
-      // const paymobAuthKeyRes = await fetch(
-      //   "https://accept.paymob.com/api/auth/tokens",
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       // Authorization: `Bearer ${useRuntimeConfig().paymob.secretKey}`,
-      //     },
-      //     body: JSON.stringify({
-      //       api_key: useRuntimeConfig().paymob.apiKey,
-      //     }),
-      //   }
-      // );
-      // const paymobAuthKey = await paymobAuthKeyRes.json();
-
-      // console.log({ tokens: paymobAuthKey?.token });
-      // console.log("*")
-      // const orderDetailsRes = await fetch(
-      //   `https://accept.paymob.com/api/ecommerce/orders/${345879733}`,
-      //   {
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       Authorization: `Bearer ${paymobAuthKey.token}`,
-      //     },
-      //   }
-      // );
-      // const orderDetails = await orderDetailsRes.json();
-
-      // console.log({
-      //   orderId: body.orderId,
-      //   paymentId: body.paymentId,
-      //   orderDetails,
-      // });
+      console.log("user: ", user);
 
       const apiObject = body?.obj?.payment_key_claims?.extra?.api;
 
@@ -82,6 +52,7 @@ export default defineEventHandler(async (event) => {
                 : "pending",
           }
         );
+        console.log("updatedOrder: ", updatedOrder);
         await payments.updatePayment(parseInt(apiObject.paymentId), {
           status: body.obj.order.payment_status === "PAID" ? "paid" : "pending",
           paid_at: new Date().toISOString(),
@@ -102,6 +73,10 @@ export default defineEventHandler(async (event) => {
           is_read: false,
           user_id: user.id,
         });
+        console.log(
+          "Payment processed successfully for order: ",
+          apiObject.orderId
+        );
       } else {
         await payments.updatePayment(parseInt(apiObject.paymentId), {
           status: "failed",
@@ -116,7 +91,10 @@ export default defineEventHandler(async (event) => {
           user_id: user.id,
         });
       }
-
+      console.log(
+        "Payment notification processed successfully for order: ",
+        apiObject.orderId
+      );
       return {
         success: body.obj.success,
         status: body.obj.order.payment_status,

@@ -57,7 +57,7 @@
       />
     </UiFormGroup>
     <div class="flex-1 col-span-2 flex items-center justify-end gap-3">
-      <UiButton type="submit">
+      <UiButton type="submit" :disabled="!form.start_at || !form.end_at">
         Next
         <Icon name="i-heroicons-arrow-right-solid" />
       </UiButton>

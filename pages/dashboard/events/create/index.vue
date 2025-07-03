@@ -68,6 +68,11 @@
               query: { step: FormStepEnum.AUDIENCE_AND_CAPACITY },
             })
           "
+          :event-capacity="eventFormBuilder.form.capacity"
+          :event-date="{
+            start_at: eventFormBuilder.form.start_at,
+            end_at: eventFormBuilder.form.end_at,
+          }"
           @next="handleSetTicketsAndPricing"
         />
         <EventsCreateStepsFinalEventCreate
@@ -75,10 +80,14 @@
             $route.query.step === FormStepEnum.FINAL_EVENT_CREATE &&
             $route.query.step
           "
-          @on-cancel="handleCancel"
+          :event="finalEventForm"
           @on-publish="handlePublish"
           @on-save-draft="handleSaveDraft"
-          :event="finalEventForm"
+          @on-back="
+            $router.push({
+              query: { step: FormStepEnum.TICKETS_AND_PRICING },
+            })
+          "
         />
       </div>
     </KeepAlive>
@@ -99,6 +108,8 @@ import {
   EventsCreateStepsBasicInfoForm,
 } from "#components";
 import { toast } from "vue-sonner";
+import { EventCreateCommand } from "~/services/events/event.command";
+import { TicketTypeCreateCommand } from "~/services/ticket-types/ticket-type.command";
 import {
   AudienceType,
   EventType,
@@ -109,10 +120,7 @@ import {
 } from "~/types/events";
 import type { TicketType, TicketTypeForm } from "~/types/ticket-type";
 
-const finalEventForm = ref<Omit<
-  EventModel,
-  "id" | "created_at" | "updated_at"
-> | null>(null);
+const finalEventForm = ref<EventForm | null>(null);
 const eventFormBuilder = useEventFormBuilder();
 const ticketsList = ref<TicketTypeForm[]>([]);
 const eventCreatedId = ref<number | undefined>(undefined);
@@ -177,80 +185,79 @@ const handleSetAudienceAndCapacity = (event: {
   });
 };
 
-const createEvent = async (event: EventForm) => {
-  await execute("/api/events", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(event),
-    onSuccess: (res: ResponseSchemaType<Event>) => {
-      toast.success("Event created successfully , redirecting to events");
-      console.log("created event res: ", res);
-      console.log("created event data: ", data.value);
+// const createEvent = async (event: EventForm) => {
+// await execute("/api/events", {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   body: JSON.stringify(event),
+//   onSuccess: (res: ResponseSchemaType<Event>) => {
+//     toast.success("Event created successfully , redirecting to events");
+//     console.log("created event res: ", res);
+//     console.log("created event data: ", data.value);
 
-      eventCreatedId.value = res?.data?.id;
-      eventFormBuilder.resetFormAndFormBlurred();
-    },
-    onError: () => {
-      if (import.meta.dev) {
-        console.error("Error creating event:", error);
-      }
-      throw new Error(
-        "something went wrong while creating event , please try again"
-      );
-    },
-  });
-};
+//     eventCreatedId.value = res?.data?.id;
+//     eventFormBuilder.resetFormAndFormBlurred();
+//   },
+//   onError: () => {
+//     if (import.meta.dev) {
+//       console.error("Error creating event:", error);
+//     }
+//     throw new Error(
+//       "something went wrong while creating event , please try again"
+//     );
+//   },
+// });
+// };
 
-const createTickets = async (tickets: TicketTypeForm[]) => {
-  try {
-    await execute("/api/ticket-types", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(tickets),
-      onSuccess: (res: ResponseSchemaType<TicketType[]>) => {
-        toast.success("Tickets created successfully , redirecting to events");
-      },
-      onError: () => {
-        throw new Error(
-          "something went wrong while creating tickets , please try again"
-        );
-      },
-    });
-  } catch (error) {
-    if (import.meta.dev) {
-      console.error("Error creating tickets:", error);
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "something went wrong while creating tickets , please try again"
-      );
-    }
-  }
-};
+// const createTickets = async (tickets: TicketTypeForm[]) => {
+//   try {
+//     await execute("/api/ticket-types", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(tickets),
+//       onSuccess: (res: ResponseSchemaType<TicketType[]>) => {
+//         toast.success("Tickets created successfully , redirecting to events");
+//       },
+//       onError: () => {
+//         throw new Error(
+//           "something went wrong while creating tickets , please try again"
+//         );
+//       },
+//     });
+//   } catch (error) {
+//     if (import.meta.dev) {
+//       console.error("Error creating tickets:", error);
+//       toast.error(
+//         error instanceof Error
+//           ? error.message
+//           : "something went wrong while creating tickets , please try again"
+//       );
+//     }
+//   }
+// };
 
 const handlePublish = async () => {
+  let eventCreateCmd: EventCreateCommand | undefined = undefined;
+  let ticketTypes: TicketTypeCreateCommand | undefined = undefined;
   try {
-    const { formData, data: event } = eventFormBuilder.buildForm();
-    finalEventForm.value = event;
+    const { data: event } = eventFormBuilder.buildForm();
 
-    console.log("first event form", formData);
-    console.log("final event form", event);
+    eventCreateCmd = new EventCreateCommand(event);
+    const eventCreated = await eventCreateCmd.execute();
 
-    await createEvent(event);
-    if (!eventCreatedId.value) {
-      throw new Error("Event not created , please try again");
-    }
-
-    const newTickets = ticketsList.value.map((ticket) => ({
-      ...ticket,
-      event_id: eventCreatedId.value as number,
-    }));
-    await createTickets(newTickets);
-    console.log("new tickets", newTickets);
+    ticketTypes = new TicketTypeCreateCommand(
+      ticketsList.value.map((ticket) => ({
+        ...ticket,
+        event_id: eventCreated.id,
+      }))
+    );
+    await ticketTypes.execute();
+    toast.success("Event created successfully, redirecting to events");
+    eventFormBuilder.resetFormAndFormBlurred();
 
     timeoutRefs.push(
       setTimeout(() => {
@@ -258,13 +265,56 @@ const handlePublish = async () => {
       }, 1000)
     );
   } catch (error) {
+    if (!eventCreateCmd) {
+      if (import.meta.dev) {
+        console.error("eventCreateCmd is not Initialized, cannot undo.");
+      }
+      return;
+    }
+    await eventCreateCmd.undo();
+    if (!ticketTypes) {
+      if (import.meta.dev) {
+        console.error("eventCreateCmd is not Initialized, cannot undo.");
+      }
+      return;
+    }
+    await ticketTypes.undo();
     console.error("Error building event form:", error);
     toast.error(
       error instanceof Error
         ? error.message
         : "Please fill out all required fields before proceeding."
     );
+    toast.error(
+      "Something went wrong while creating the event, please try again."
+    );
+    return;
   }
+  //   await createEvent(event);
+  //   if (!eventCreatedId.value) {
+  //     throw new Error("Event not created , please try again");
+  //   }
+
+  //   const newTickets = ticketsList.value.map((ticket) => ({
+  //     ...ticket,
+  //     event_id: eventCreatedId.value as number,
+  //   }));
+  //   await createTickets(newTickets);
+  //   console.log("new tickets", newTickets);
+
+  //   timeoutRefs.push(
+  //     setTimeout(() => {
+  //       navigateTo("/dashboard/events");
+  //     }, 1000)
+  //   );
+  // } catch (error) {
+  //   console.error("Error building event form:", error);
+  //   toast.error(
+  //     error instanceof Error
+  //       ? error.message
+  //       : "Please fill out all required fields before proceeding."
+  //   );
+  // }
 };
 
 const handleSetTicketsAndPricing = (tickets: TicketTypeForm[]) => {
@@ -289,6 +339,21 @@ onUnmounted(() => {
     clearTimeout(timeout);
   });
 });
+
+watch(
+  () => [eventFormBuilder.form, ticketsList.value],
+  ([newForm, newTickets]) => {
+    if (Object.keys(newForm).length === 0) {
+      return;
+    }
+    finalEventForm.value = {
+      ...newForm,
+      tickets: newTickets,
+      company_id: null,
+    } as EventForm;
+  },
+  { immediate: true, deep: true }
+);
 
 useSeoMeta({
   title: "Create Event",

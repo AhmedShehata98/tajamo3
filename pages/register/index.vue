@@ -27,6 +27,17 @@
     >
       <div class="w-full max-w-sm">
         <div class="mb-8 text-center">
+          <button
+            type="button"
+            v-if="registerState !== 'core-info'"
+            class="place-self-center flex items-center justify-center mb-5 aspect-square px-3 py-2 rounded-md bg-primary hover:bg-primary/60 transition-colors duration-200"
+            @click="handleGoBack"
+          >
+            <Icon
+              name="ic:round-arrow-back-ios"
+              class="text-2xl text-gray-500 hover:text-gray-700 transition-colors duration-200"
+            />
+          </button>
           <h1 class="font-logo text-3xl mb-2">event management platform</h1>
           <h2 class="text-xl font-semibold text-gray-800 mb-1">
             Create New Account
@@ -225,6 +236,7 @@
                   type="button"
                   class="text-sm font-semibold text-accent underline"
                   :disabled="isRunning || isPending"
+                  @click="handleSendOtp"
                 >
                   <p v-if="!isRunning" class="text-inherit">re-send</p>
                   <p v-else class="text-inherit">{{ formatted }}</p>
@@ -337,6 +349,18 @@ const fullPhoneNumber = computed(() => {
     : `${form.countryCode}${form.phoneNumber}`;
 });
 
+const handleGoBack = () => {
+  if (registerState.value === "otp") {
+    registerState.value = "location";
+    reset();
+    stopCountdown();
+  } else if (registerState.value === "location") {
+    registerState.value = "core-info";
+  } else {
+    router.push("/register");
+  }
+};
+
 const handleCreateToken = async (userId: number) => {
   try {
     isPending.value = true;
@@ -439,6 +463,7 @@ const handleCreateUser = async (form: UserForm) => {
   } catch (error) {
     isPending.value = false;
     isSendOtpCode.value = false;
+    console.log("error: ", error);
     toast.error(
       error instanceof Error ? error.message : "Failed to sign up new account"
     );

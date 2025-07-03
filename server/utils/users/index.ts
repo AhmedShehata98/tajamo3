@@ -13,13 +13,13 @@ export class Users {
         .select("id,phone,first_name,last_name,avatar,created_at")
         .single<User>();
       if (error) {
-        throw new Error(error?.message || "internal server error");
+        throw new Error(error?.details || "internal server error", {
+          cause: error.cause,
+        });
       }
       return data;
     } catch (error) {
-      throw new Error(
-        error instanceof Error ? error.message : "internal server error"
-      );
+      throw error;
     }
   }
 
@@ -32,17 +32,13 @@ export class Users {
         .select("id,phone,first_name,last_name,avatar")
         .eq("phone", phone)
         .maybeSingle<User>();
-      console.log("data: ", data);
-      console.log("error: ", error);
 
       if (error) {
-        throw new Error(error?.message || "bad request or not found");
+        throw new Error(error?.details || "bad request or not found");
       }
       return data;
     } catch (error) {
-      throw new Error(
-        error instanceof Error ? error.message : "internal server error"
-      );
+      throw error;
     }
   }
 
@@ -56,13 +52,11 @@ export class Users {
         .eq("email", email)
         .maybeSingle<User>();
       if (error) {
-        throw new Error(error?.message || "bad request or not found");
+        throw new Error(error?.details || "bad request or not found");
       }
       return data;
     } catch (error) {
-      throw new Error(
-        error instanceof Error ? error.message : "internal server error"
-      );
+      throw error;
     }
   }
 
@@ -76,15 +70,11 @@ export class Users {
       }
       const { data, error } = await this.supabase.from("users").select("*");
       if (error || data?.error) {
-        throw new Error(error?.message || "internal server error");
+        throw new Error(error?.details || "internal server error");
       }
       return data;
     } catch (error) {
-      return createError({
-        statusCode: 500,
-        message:
-          error instanceof Error ? error.message : "internal server error",
-      });
+      throw error;
     }
   }
 
@@ -96,13 +86,11 @@ export class Users {
         .eq("id", userId)
         .single<User>();
       if (error || data?.error) {
-        throw new Error(error?.message || "bad request");
+        throw new Error(error?.details || "bad request");
       }
       return data;
     } catch (error) {
-      throw new Error(
-        error instanceof Error ? error.message : "internal server error"
-      );
+      throw error;
     }
   }
 
@@ -115,13 +103,11 @@ export class Users {
         .select("id,phone,first_name,last_name,avatar,created_at")
         .single<User>();
       if (error) {
-        throw new Error(error?.message || "bad request");
+        throw new Error(error?.details || "bad request");
       }
       return data;
     } catch (error) {
-      throw new Error(
-        error instanceof Error ? error.message : "internal server error"
-      );
+      throw error;
     }
   }
 
@@ -137,13 +123,11 @@ export class Users {
         .select("id,phone,first_name,last_name,avatar,created_at")
         .single<User>();
       if (error) {
-        throw new Error(error?.message || "bad request");
+        throw new Error(error?.details || "bad request");
       }
       return data;
     } catch (error) {
-      throw new Error(
-        error instanceof Error ? error.message : "internal server error"
-      );
+      throw error;
     }
   }
 }

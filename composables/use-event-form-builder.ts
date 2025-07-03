@@ -1,5 +1,5 @@
 import type { Reactive } from "vue";
-import type { Event } from "~/types/events";
+import type { Event, EventForm } from "~/types/events";
 import { AudienceType, LocationType, EventType } from "~/types/events";
 
 const useEventFormBuilder = () => {
@@ -15,7 +15,7 @@ class EventFormBuilder {
   private _formBlurred: Reactive<Record<string, boolean>>;
 
   constructor() {
-    this._form = reactive({
+    this._form = reactive<EventForm>({
       name: "",
       image: "",
       description: "",
@@ -27,11 +27,15 @@ class EventFormBuilder {
       location_type: LocationType.OFFLINE,
       company_id: null,
       audience: AudienceType.PUBLIC,
-      latitude: null,
-      longitude: null,
+      latitude: undefined,
+      longitude: undefined,
       created_at: new Date().toISOString(),
     });
     this._formBlurred = reactive<Record<string, boolean>>({});
+  }
+
+  get form() {
+    return this._form;
   }
 
   setName(name: string) {
@@ -103,8 +107,9 @@ class EventFormBuilder {
       location_type: LocationType.OFFLINE,
       company_id: null,
       audience: AudienceType.PUBLIC,
-      created_by: 0,
-      price: 0,
+      latitude: undefined,
+      longitude: undefined,
+      created_at: new Date().toISOString(),
     };
     return this;
   }
@@ -120,7 +125,7 @@ class EventFormBuilder {
 
   buildForm(): {
     formData: FormData;
-    data: Omit<Event, "id" | "created_at" | "updated_at">;
+    data: EventForm;
   } {
     if (!this._form.name) {
       throw new Error("Event name is required");
@@ -148,9 +153,6 @@ class EventFormBuilder {
     }
     if (!this._form.image) {
       throw new Error("Event image is required");
-    }
-    if (this._form.price < 0) {
-      throw new Error("Event price cannot be negative");
     }
     const formData = new FormData();
     (Object.keys(this._form) as Array<keyof typeof this._form>).forEach(

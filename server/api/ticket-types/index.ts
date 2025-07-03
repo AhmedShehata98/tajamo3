@@ -7,7 +7,13 @@ export default defineEventHandler(async (event) => {
   try {
     switch (event.method) {
       case "POST":
-        return await ticketTypes.createTicketTypes(body);
+        const createdTicketType = await ticketTypes.createTicketTypes(body);
+
+        return new ResponseSchema(
+          createdTicketType,
+          true,
+          "Ticket type created successfully"
+        );
       default:
         throw new Error("Method not allowed");
     }

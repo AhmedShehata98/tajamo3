@@ -68,13 +68,26 @@
           </UiTableRow>
         </UiTableHeader>
         <UiTableBody>
-          <UiTableRow v-for="ticket in filteredTickets" :key="ticket.id">
-            <UiTableCell v-for="header in headers" :key="header.key">
-              {{ ticket[header.key] }}
+          <template v-if="!filteredTickets || filteredTickets?.length === 0">
+            <UiTableRow v-for="ticket in filteredTickets" :key="ticket.id">
+              <UiTableCell v-for="header in headers" :key="header.key">
+                {{ ticket[header.key] }}
+              </UiTableCell>
+              <UiTableCell>
+                <UiButton variant="outline">View</UiButton>
+              </UiTableCell>
+            </UiTableRow>
+          </template>
+          <UiTableRow>
+            <UiTableCell />
+            <UiTableCell />
+            <UiTableCell />
+            <UiTableCell class="text-center text-gray-400 py-8 font-bold">
+              No tickets found matching your criteria.
             </UiTableCell>
-            <UiTableCell>
-              <UiButton variant="outline">View</UiButton>
-            </UiTableCell>
+            <UiTableCell />
+            <UiTableCell />
+            <UiTableCell />
           </UiTableRow>
         </UiTableBody>
       </UiTable>
@@ -90,14 +103,18 @@ const searchQuery = ref("");
 const eventFilter = ref("");
 const stateFilter = ref("");
 const dateFilter = ref("");
-const loading = ref(false);
 const { userStore } = useUser();
-const { data: TicketsList } = useFetch(`/api/tickets/${userStore.value?.id}`, {
-  key: QUERY_KEYS.TICKETS,
-  method: "GET",
-  watch: [() => userStore.value?.id],
-});
+const { data: TicketsList, error } = useFetch(
+  `/api/tickets/user/${userStore.value?.id}`,
+  {
+    key: QUERY_KEYS.TICKETS,
+    method: "GET",
+    watch: [() => userStore.value?.id],
+    immediate: Boolean(userStore.value?.id),
+  }
+);
 console.log("TicketsList: ", TicketsList.value);
+console.log("TicketsList error: ", error.value);
 
 const headers = [
   { key: "id", label: "Ticket ID" },

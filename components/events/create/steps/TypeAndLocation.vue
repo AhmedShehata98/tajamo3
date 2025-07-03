@@ -93,14 +93,10 @@
         v-model="form.location_coordinates"
       />
       <span class="flex flex-col items-center justify-center w-full p-4">
-        <h3 class="secondary-text text-lg mt-2">
+        <h3 class="text-text-primary text-lg mt-2 max-w-2/3 text-center">
           Please select the location on the map above.
         </h3>
-        <p class="secondary-text text-sm mt-1 text-center">
-          Note: This feature is not yet implemented, but will be available soon.
-          <br />
-          You can still enter the location manually in the input field above.
-        </p>
+
         <span
           class="flex items-center justify-center bg-secondary/40 backdrop-blur-md shadow-sm rounded-full aspect-square p-4 mt-6"
         >
@@ -117,6 +113,9 @@
       class="flex flex-col w-full col-span-2 items-center gap-3 mt-4 bg-secondary/30 backdrop-blur-md rounded-lg p-4"
       v-if="form.location_type === LocationType.ONLINE"
     >
+      <h5 class="text-text-secondary place-self-start">
+        Please enter the link to your {{ form.event_type }}.
+      </h5>
       <span
         class="flex items-center justify-center bg-secondary/40 backdrop-blur-md shadow-sm rounded-full aspect-square p-4 mt-6"
       >
@@ -136,7 +135,15 @@
     </div>
 
     <div class="flex-1 col-span-2 flex items-center justify-end gap-3">
-      <UiButton type="submit">
+      <UiButton
+        type="submit"
+        :disabled="
+          !form.event_type ||
+          !form.location ||
+          (form.location_type === LocationType.OFFLINE &&
+            !form.location_coordinates)
+        "
+      >
         Next
         <Icon name="i-heroicons-arrow-right-solid" />
       </UiButton>
@@ -169,12 +176,7 @@ const form = ref({
   },
 });
 
-const location = ref<{ lat: number; lng: number }>({
-  lat: 31.19555225,
-  lng: 29.938382000000004,
-});
-
-const { data: addressDetails } = useAsyncData(
+const { data: addressDetails, refresh: refreshAddressDetails } = useAsyncData(
   "addressDetails",
   async () => {
     const { lat, lng } = form.value.location_coordinates;
@@ -206,6 +208,17 @@ const emit = defineEmits<{
   ): void;
   (e: "back"): void;
 }>();
+
+watch(
+  () => form.value.location_type,
+  async (newType) => {
+    if (newType === LocationType.ONLINE) {
+      form.value.location = "";
+    } else {
+      form.value.location = addressDetails.value || "";
+    }
+  }
+);
 
 const handleCreateEvent = () => {
   emit("next", form.value);

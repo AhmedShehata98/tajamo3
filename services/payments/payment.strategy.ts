@@ -46,7 +46,7 @@ class PaymobCreditCardStrategy implements PaymentStrategy {
           quantity: order.quantity || 1,
         })),
         billing_data: payment.billingData,
-        notification_url: `https://d91e-154-238-180-102.ngrok-free.app/api/payments/confirmation`,
+        notification_url: `${origin}/api/payments/confirmation`,
         redirection_url: `${origin}/dashboard/payments/redirect`,
         extras: {
           api: {

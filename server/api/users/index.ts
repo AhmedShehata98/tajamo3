@@ -32,10 +32,11 @@ export default defineEventHandler(async (event) => {
 
       const createdUser = await users.createUser(body);
 
+      console.log("createdUser: ", createdUser);
       if (!createdUser) {
         return createError({
           statusCode: 400,
-          statusMessage: createdUser || "Failed to create user",
+          statusMessage: createdUser,
         });
       }
 
@@ -49,7 +50,7 @@ export default defineEventHandler(async (event) => {
     return createError({
       statusCode: 500,
       statusMessage:
-        error instanceof Error ? error.message : "internal server error",
+        error instanceof Error ? error?.message : "internal server error",
     });
   }
 });

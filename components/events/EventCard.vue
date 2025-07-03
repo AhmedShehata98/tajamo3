@@ -31,64 +31,52 @@
     </figure>
     <div class="flex items-start flex-col p-4 justify-start gap-2 mt-1.5">
       <span
-        class="text-sm text-muted-foreground bg-event-color-food rounded-md p-1 px-2.5 mt-2"
+        class="text-sm bg-event-color-food rounded-md p-1 px-2.5 mt-2"
         :class="eventTypeBackgroundFactory(event.event_type)"
       >
         <p class="text-sm font-semibold capitalize">
           {{ event.event_type }}
         </p>
       </span>
-      <h3 class="text-lg font-semibold">{{ event.name }}</h3>
+      <h3 class="text-lg text-accent font-semibold">{{ event.name }}</h3>
       <p
-        class="h-8 overflow-hidden text-xs text-muted-foreground hover:overflow-visible hover:h-auto transition-[height] duration-300"
+        class="h-8 overflow-hidden text-xs hover:overflow-visible hover:h-auto transition-[height] duration-300"
       >
         {{ event.description }}
       </p>
-      <ul class="grid grid-cols-1 gap-1.5 mt-auto pt-3">
-        <li
-          class="text-sm text-muted-foreground flex items-center gap-2 overflow-hidden"
-        >
+      <ul class="grid grid-cols-1 text-text-primary gap-1.5 mt-auto pt-3">
+        <li class="text-sm flex items-center gap-2 overflow-hidden">
           <span
             class="flex items-center justify-center bg-accent/20 rounded-full min-w-7 min-h-7"
           >
             <Icon name="mdi:location" class="text-xl text-accent" />
           </span>
-          {{
-            event.location_type === LocationType.ONLINE
-              ? "Online"
-              : event.location
-          }}
+          <p class="text-inherit text-start">
+            {{
+              event.location_type === LocationType.ONLINE
+                ? "Online"
+                : event.location
+            }}
+          </p>
         </li>
-        <li
-          class="text-sm text-muted-foreground flex items-center gap-2 overflow-hidden"
-        >
+        <li class="text-sm flex items-center gap-2 overflow-hidden">
           <span
             class="flex items-center justify-center bg-accent/20 rounded-full min-w-7 min-h-7"
           >
             <Icon name="mdi:calendar" class="text-xl text-accent" />
           </span>
-          {{ dateFormatter(event.start_at) }}
+          <p class="text-inherit text-start">
+            {{ dateFormatter(event.start_at) }}
+          </p>
         </li>
-        <!-- <li
-          class="text-sm text-muted-foreground flex items-center gap-2 overflow-hidden"
-        >
-          <span
-            class="flex items-center justify-center bg-accent/20 rounded-full min-w-7 min-h-7"
-          >
-            <Icon name="mdi:ticket" class="text-xl text-accent" />
-          </span>
-          {{ event.capacity }}
-        </li>
-        <li
-          class="text-sm text-muted-foreground flex items-center gap-2 overflow-hidden"
-        >
+        <li class="text-sm flex items-center gap-2 overflow-hidden mt-1.5">
           <span
             class="flex items-center justify-center bg-accent/20 rounded-full min-w-7 min-h-7"
           >
             <Icon name="mdi:user" class="text-xl text-accent" />
           </span>
-          {{ event.capacity }} Attendees
-        </li> -->
+          <p class="text-inherit text-start">{{ event.capacity }} Attendees</p>
+        </li>
       </ul>
     </div>
   </li>

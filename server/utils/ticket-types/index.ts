@@ -1,5 +1,8 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import { TicketTypeForm } from "~/types/ticket-type";
+import {
+  TicketTypeForm,
+  TicketType as TicketTypeType,
+} from "~/types/ticket-type";
 import supabase from "../supabase";
 
 export class TicketTypes {
@@ -12,8 +15,8 @@ export class TicketTypes {
         .insert(ticketTypes)
         .select(
           "id,created_at,event_id,name,description,price,quantity_available,sale_start,sale_end"
-        )
-        .single();
+        );
+
       if (error) {
         throw new Error(
           `something went wrong while creating ticket types : ${error.message}`
@@ -73,6 +76,30 @@ export class TicketTypes {
       }
       throw new Error(
         "something went wrong while getting ticket type , please try again"
+      );
+    }
+  }
+
+  async removeTicketTypeById(ticketId: number) {
+    try {
+      const { data, error } = await this.supabase
+        .from("ticket_types")
+        .delete()
+        .eq("id", ticketId)
+        .select("*")
+        .single();
+      if (error) {
+        throw new Error(
+          `something went wrong while deleting ticket type : ${error.message}`
+        );
+      }
+      return data;
+    } catch (error) {
+      if (import.meta.dev) {
+        console.error("Error deleting ticket type:", error);
+      }
+      throw new Error(
+        "something went wrong while deleting ticket type , please try again"
       );
     }
   }

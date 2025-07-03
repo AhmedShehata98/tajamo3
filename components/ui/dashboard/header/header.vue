@@ -1,6 +1,6 @@
 <template>
   <header
-    class="sticky top-0 left-0 z-50 isolate w-full flex items-center justify-between px-4 py-3 border-b bg-secondary backdrop-blur-xl border-border"
+    class="sticky top-0 left-0 z-50 isolate w-full flex items-center justify-between px-4 py-3 border-b bg-transparent backdrop-blur-md border-border"
   >
     <div>
       <form action="" class="w-56">

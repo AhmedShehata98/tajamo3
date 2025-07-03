@@ -52,9 +52,8 @@ const handleOtpInput = (event: Event, index: number) => {
   }
 };
 const handleOtpKeydown = async (event: KeyboardEvent, index: number) => {
-  // handle paste pin code from clipboard if event.key === "v" && event.ctrlKey
-  const key = event.key.toLowerCase();
-  if (key === "v" && event.ctrlKey) {
+  const keyCode = event.code.toLowerCase();
+  if (keyCode === "KeyV" && event.ctrlKey) {
     event.preventDefault();
     const pin = await getOtpFromClipboard(event);
     otpValue.value = pin;

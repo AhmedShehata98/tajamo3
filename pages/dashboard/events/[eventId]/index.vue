@@ -7,33 +7,72 @@
         class="w-full h-full object-cover"
       />
       <div
-        class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/80 rounded-t-sm flex flex-col items-start justify-end p-4"
+        class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/90 rounded-t-sm flex items-end justify-between justify-end p-4"
       >
-        <span
-          v-if="eventDetails?.data?.event_type"
-          :class="eventTypeBackgroundFactory(eventDetails?.data?.event_type)"
-          class="px-3 py-1 rounded-full text-white text-xs font-medium mb-3"
+        <div class="flex flex-col items-start space-y-6 flex-1">
+          <span
+            v-if="eventDetails?.data?.event_type"
+            :class="eventTypeBackgroundFactory(eventDetails?.data?.event_type)"
+            class="px-3 py-1 rounded-full text-white text-xs font-medium mb-3"
+          >
+            {{ eventDetails?.data?.event_type }}
+          </span>
+          <h3 class="text-white text-2xl font-bold mb-3">
+            {{ eventDetails?.data?.name }}
+          </h3>
+        </div>
+        <div
+          v-if="status === 'success'"
+          class="flex items-center justify-start gap-2"
         >
-          {{ eventDetails?.data?.event_type }}
-        </span>
-        <h3 class="text-white text-2xl font-bold mb-3">
-          {{ eventDetails?.data?.name }}
-        </h3>
+          <UiButton type="button" variant="outline">
+            <Icon name="mdi:share" class="w-4 h-4" />
+            <p class="text-sm font-medium">Share</p>
+          </UiButton>
+          <EventsChooseTicketWrapper
+            v-if="
+              !eventDetails?.data?.is_registered &&
+              eventDetails?.data.created_by !== userStore?.id
+            "
+            :ticketTypes="ticketTypes?.data || []"
+            ref="ticketModal"
+            @buy="handleBuyTicket"
+            @select="handleSelectTicket"
+          >
+            <template #trigger>
+              <UiButton type="button"> enroll now </UiButton>
+            </template>
+          </EventsChooseTicketWrapper>
+          <button
+            v-if="success || eventDetails?.data?.is_registered"
+            type="button"
+            disabled
+            class="flex items-center justify-start gap-2 bg-accent/20 text-gray-400 px-3 py-2 rounded-lg cursor-not-allowed"
+          >
+            <Icon name="mdi:check" class="w-4 h-4" />
+            <p class="text-inherit text-sm font-medium">enrolled</p>
+          </button>
+        </div>
       </div>
     </figure>
     <div class="w-full flex items-center justify-between gap-4 p-4">
       <ul
-        class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-start gap-5 bg-primary px-3 py-2 rounded-sm"
+        class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-start gap-5"
       >
-        <li class="flex items-center justify-start gap-2 max-w-full">
+        <li
+          class="flex items-center justify-start gap-2 bg-card px-3 py-2 rounded-lg max-w-full"
+        >
           <Icon name="mdi:calendar" class="text-2xl text-accent shrink-0" />
           <p
             class="text-xs font-semibold capitalize text-text-secondary max-w-full overflow-hidden text-ellipsis"
           >
+            <strong class="text-gray-800"> start : </strong>
             {{ dateFormatter(eventDetails?.data?.start_at) }}
           </p>
         </li>
-        <li class="flex items-center justify-start gap-2 max-w-full">
+        <li
+          class="flex items-center justify-start gap-2 bg-card px-3 py-2 rounded-lg max-w-full"
+        >
           <Icon
             name="mdi:calendar-range"
             class="text-2xl text-accent shrink-0"
@@ -41,21 +80,24 @@
           <p
             class="text-xs font-semibold capitalize text-text-secondary max-w-full overflow-hidden text-ellipsis"
           >
+            <strong class="text-gray-800"> end : </strong>
             {{ dateFormatter(eventDetails?.data?.end_at) }}
           </p>
         </li>
         <li
           v-if="eventDetails?.data?.location_type === LocationType.OFFLINE"
-          class="flex items-center justify-start gap-2 max-w-full"
+          class="flex items-center justify-start gap-2 bg-card px-3 py-2 rounded-lg max-w-full"
         >
           <Icon name="mdi:location" class="text-2xl text-accent shrink-0" />
           <p
             class="text-xs font-semibold capitalize text-center text-text-secondary max-w-full overflow-hidden text-ellipsis"
           >
-            {{ eventDetails?.data?.location }}
+            {{ eventDetails?.data?.location_type }}
           </p>
         </li>
-        <li class="flex items-center justify-start gap-2 max-w-full">
+        <li
+          class="flex items-center justify-start gap-2 bg-card px-3 py-2 rounded-lg max-w-full"
+        >
           <Icon name="mdi:users" class="text-2xl text-accent shrink-0" />
           <p
             class="text-xs font-semibold capitalize text-center text-text-secondary max-w-full overflow-hidden text-ellipsis"
@@ -63,70 +105,9 @@
             {{ eventDetails?.data?.capacity }} attendees
           </p>
         </li>
-        <li
-          v-if="eventDetails?.data?.location_type === LocationType.ONLINE"
-          class="flex items-center justify-start gap-2 max-w-full"
-        >
-          <Icon name="mdi:link" class="text-2xl text-accent shrink-0" />
-          <nuxt-link
-            :href="eventDetails?.data?.location"
-            class="flex items-center gap-1 text-xs font-semibold capitalize text-text-secondary max-w-full overflow-hidden text-ellipsis"
-          >
-            <p>go to event</p>
-            <Icon name="mdi:open-in-new" class="text-base" />
-          </nuxt-link>
-        </li>
-        <li class="flex items-center justify-start gap-2 max-w-full">
-          <Icon name="mdi:users" class="text-2xl text-accent shrink-0" />
-          <p
-            class="text-xs font-semibold capitalize text-text-secondary max-w-full overflow-hidden text-ellipsis"
-          >
-            {{ eventDetails?.data?.capacity }} attendees
-          </p>
-        </li>
       </ul>
-      <div
-        v-if="status === 'success'"
-        class="flex items-center justify-start gap-2"
-      >
-        <UiButton type="button" variant="outline">
-          <Icon name="mdi:share" class="w-4 h-4" />
-          <p class="text-sm font-medium">Share</p>
-        </UiButton>
-        <!-- TODO: CHECK IF USER IS ENROLLED AND HIDE BUTTON IF TRUE -->
-
-        <EventsChooseTicketWrapper
-          :ticketTypes="ticketTypes?.data || []"
-          ref="ticketModal"
-          @buy="handleBuyTicket"
-          @select="handleSelectTicket"
-        >
-          <template #trigger>
-            <UiButton
-              v-if="
-                !eventDetails?.data?.is_registered &&
-                eventDetails?.data.created_by !== userStore?.id
-              "
-              type="button"
-            >
-              enroll now
-            </UiButton>
-          </template>
-        </EventsChooseTicketWrapper>
-
-        <!-- TODO: CHECK IF USER IS ENROLLED -->
-        <UiButton
-          v-if="success || eventDetails?.data?.is_registered"
-          type="button"
-          disabled
-          variant="ghost"
-        >
-          <Icon name="mdi:check" class="w-4 h-4" />
-          <p class="text-sm font-medium">enrolled</p>
-        </UiButton>
-      </div>
     </div>
-    <div class="w-full flex items-start justify-start gap-4 py-2 px-4 mt-4">
+    <div class="w-full flex items-start justify-start gap-4 py-2 px-4">
       <ul
         class="w-full md:w-1/2 lg:w-[60%] flex items-center flex-col justify-start gap-4"
       >
@@ -156,12 +137,15 @@
           <div
             class="w-full h-[260px] bg-background/50 backdrop-blur-md rounded-lg overflow-hidden text-center"
           >
-            <AppLeafletMaps
-              :selectedLocation="{
-                lat: eventDetails?.data?.latitude,
-                lng: eventDetails?.data?.longitude,
-              }"
-            />
+            <ClientOnly>
+              <AppLeafletMaps
+                :selectedLocation="{
+                  lat: eventDetails?.data?.latitude,
+                  lng: eventDetails?.data?.longitude,
+                }"
+                style="height: 100%"
+              />
+            </ClientOnly>
           </div>
         </li>
         <li
@@ -183,10 +167,13 @@
               <Icon name="mdi:link" class="text-4xl text-accent" />
             </span>
             <nuxt-link
-              :href="eventDetails?.data?.location"
-              class="text-sm font-medium text-accent mt-4 bg-accent/20 p-2 rounded-sm"
+              :href="eventDetails?.data?.invitation_url"
+              class="flex items-center justify-center gap-2 text-sm font-medium text-accent mt-4 bg-accent/20 p-2 rounded-sm"
             >
-              {{ eventDetails?.data?.location }}
+              <p>
+                {{ eventDetails?.data?.invitation_url }}
+              </p>
+              <Icon name="mdi:open-in-new" class="text-base" />
             </nuxt-link>
           </div>
         </li>
