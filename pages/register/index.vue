@@ -250,9 +250,12 @@
             <span class="mx-3 text-gray-400 text-sm">or</span>
             <div class="flex-1 h-px bg-gray-200"></div>
           </div>
+
           <button
             type="button"
             class="w-full flex items-center justify-center gap-2 py-3 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium transition-all duration-200"
+            @click="login"
+            :disabled="!isReady"
           >
             <img
               src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -289,6 +292,10 @@ import type { UserForm } from "~/types/users";
 const router = useRouter();
 const isSendOtpCode = ref(false);
 const isPending = ref(false);
+const { isReady, login } = useCodeClient({
+  onSuccess: handleRegisterWithGoogle,
+  onError: handleRegisterWithGoogleError,
+});
 const {
   start: startCountdown,
   stop: stopCountdown,
@@ -470,6 +477,55 @@ const handleCreateUser = async (form: UserForm) => {
     console.error("Failed to sign up:", error);
   }
 };
+
+async function handleRegisterWithGoogle(response: any) {
+  try {
+    const { credential } = response;
+    console.log("Access Token", credential);
+    console.log("response: ", response);
+
+    const res = await $fetch(`/api/auth/oauth/google/verify/code`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        code: response.code,
+      },
+    });
+    console.log("res: ", res);
+  } catch (error) {
+    toast.error(
+      error instanceof Error ? error.message : "Failed to register with Google"
+    );
+    console.error("Failed to register with Google:", error);
+  }
+  // try {
+  //   const res = await $fetch("/api/auth/oauth/google", {
+  //     method: "GET",
+  //     onResponse({ response }) {
+  //       console.log("response: ", response);
+  //     },
+  //   });
+
+  //   const anchor = document.createElement("a");
+  //   anchor.href = res.data as string;
+  //   anchor.target = "_blank";
+  //   anchor.click();
+  // } catch (error) {
+  //   toast.error(
+  //     error instanceof Error ? error.message : "Failed to register with Google"
+  //   );
+  //   console.error("Failed to register with Google:", error);
+  // }
+}
+
+function handleRegisterWithGoogleError(error: any) {
+  toast.error(
+    error instanceof Error ? error.message : "Failed to register with Google"
+  );
+  console.error("Failed to register with Google:", error);
+}
 
 watch(
   () => form.otp.join("").length,

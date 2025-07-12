@@ -1,11 +1,11 @@
 import type { User } from "~/types/users";
 import supabase, { SupabaseClient } from "~/server/utils/supabase";
-import { SignUpForm } from "~/services/auth/auth.strategy";
+import { UserForm } from "~/types/users";
 
 export class Users {
   constructor(private readonly supabase: SupabaseClient) {}
 
-  async createUser(user: SignUpForm): Promise<User> {
+  async createUser(user: UserForm): Promise<User> {
     try {
       const { data, error } = await this.supabase
         .from("users")

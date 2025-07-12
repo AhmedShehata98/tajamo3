@@ -39,14 +39,6 @@
         <li class="w-full">
           <UiDashboardSidebarNavLink
             icon="heroicons:users"
-            to="/dashboard/attendance"
-          >
-            attendance
-          </UiDashboardSidebarNavLink>
-        </li>
-        <li class="w-full">
-          <UiDashboardSidebarNavLink
-            icon="heroicons:users"
             to="/dashboard/teams"
           >
             teams

@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "shadcn-nuxt",
     "@nuxtjs/leaflet",
+    "nuxt-vue3-google-signin",
   ],
   // plugins: ["~/plugins/supabase.ts"],
   css: ["~/assets/css/tailwind.css"],
@@ -19,18 +20,28 @@ export default defineNuxtConfig({
       allowedHosts: ["bnch91p2-3000.euw.devtunnels.ms"],
     },
   },
-
+  googleSignIn: {
+    clientId: process.env.GOOGLE_CLIENT_ID,
+  },
   runtimeConfig: {
     public: {
       supabaseUrl: process.env.SUPABASE_URL,
       paymobPublickKey: process.env.PAYMOB_PUBLIC_KEY,
+      googleClientId: process.env.GOOGLE_CLIENT_ID,
     },
+
     supabaseKey: process.env.SUPABASE_KEY,
     supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
     jwtSecret: process.env.JWT_SECRET,
+    geoapifyApiKey: process.env.GEOAPIFY_API_KEY,
     paymob: {
       apiKey: process.env.PAYMOB_API_KEY,
       secretKey: process.env.PAYMOB_SECRET_KEY,
+    },
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      redirectUri: process.env.GOOGLE_REDIRECT_URI,
     },
   },
   shadcn: {
@@ -53,4 +64,7 @@ export default defineNuxtConfig({
       ssr: false, // Disable SSR for all nested routes
     },
   },
+  nitro :{
+    preset: "vercel"
+  }
 });

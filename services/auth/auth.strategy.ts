@@ -19,6 +19,11 @@ export interface AuthOTPStrategy {
   removeOtp(otpId: number): Promise<OtpType>;
 }
 
+export interface OpenAuthStrategy {
+  login(): Promise<void>;
+  signup(): Promise<void>;
+}
+
 class PhoneAuthStrategy implements AuthOTPStrategy {
   async sendOtp(phoneNumber: string): Promise<AuthForm> {
     try {
@@ -334,4 +339,31 @@ class EmailAuthStrategy implements AuthOTPStrategy {
   }
 }
 
-export { PhoneAuthStrategy, EmailAuthStrategy };
+class GoogleAuth implements OpenAuthStrategy {
+  login(): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+  async signup(): Promise<void> {
+    try {
+      const googleRedirectRes = await fetch("/api/auth/oauth/google");
+      if (!googleRedirectRes.ok) {
+        throw new Error(
+          googleRedirectRes.statusText || "Failed to redirect to Google OAuth."
+        );
+      }
+      const res = await fetch("/api/auth/oauth/google/callback");
+      const data = await res.json();
+
+      console.log("return value from google auth", data);
+    } catch (error) {
+      throw new Error(
+        error instanceof Error
+          ? error.message
+          : error?.toString() ||
+            "An unknown error occurred while signing up with Google."
+      );
+    }
+  }
+}
+
+export { PhoneAuthStrategy, EmailAuthStrategy, GoogleAuth };
