@@ -28,8 +28,8 @@ export default defineNuxtConfig({
       supabaseUrl: process.env.SUPABASE_URL,
       paymobPublickKey: process.env.PAYMOB_PUBLIC_KEY,
       googleClientId: process.env.GOOGLE_CLIENT_ID,
+      websiteUrl: process.env.WEBSITE_URL,
     },
-
     supabaseKey: process.env.SUPABASE_KEY,
     supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
     jwtSecret: process.env.JWT_SECRET,
@@ -64,7 +64,7 @@ export default defineNuxtConfig({
       ssr: false, // Disable SSR for all nested routes
     },
   },
-  nitro :{
-    preset: "vercel"
-  }
+  nitro: {
+    preset: "vercel",
+  },
 });
