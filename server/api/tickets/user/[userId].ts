@@ -10,9 +10,6 @@ export default defineEventHandler(async (event) => {
         });
       }
 
-      console.log("=======================");
-      console.log(userId);
-
       const tickets = await ticket.getTicketsByUserId(Number(userId));
 
       if (!tickets || tickets.length === 0) {

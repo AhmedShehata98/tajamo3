@@ -53,7 +53,7 @@
     </div>
 
     <!-- Tickets Table -->
-    <div class="w-full bg-card rounded-md p-2">
+    <div class="w-full max-w-full overflow-x-auto bg-card rounded-md p-2">
       <UiTable>
         <UiTableCaption> Tickets </UiTableCaption>
         <UiTableHeader>
@@ -68,17 +68,64 @@
           </UiTableRow>
         </UiTableHeader>
         <UiTableBody>
-          <template v-if="!filteredTickets || filteredTickets?.length === 0">
-            <UiTableRow v-for="ticket in filteredTickets" :key="ticket.id">
-              <UiTableCell v-for="header in headers" :key="header.key">
-                {{ ticket[header.key] }}
+          <template v-if="ticketsList && ticketsList.data.length >= 1">
+            <UiTableRow v-for="ticket in ticketsList.data" :key="ticket.id">
+              <UiTableCell>
+                {{ `#${ticket.id}` }}
               </UiTableCell>
+              <UiTableCell>
+                <img
+                  class="inline-block rounded-md object-cover"
+                  :src="ticket.order_id.event_id.image"
+                  alt="event-img"
+                />
+              </UiTableCell>
+              <UiTableCell>
+                <strong
+                  class="inline-block text-sm font-semibold min-w-[10rem] max-w-[13rem] text-wrap"
+                >
+                  {{ ticket.order_id.event_id.name }}
+                </strong>
+              </UiTableCell>
+              <UiTableCell>
+                {{ formatDate(ticket.order_id.event_id.start_at) }}
+              </UiTableCell>
+              <UiTableCell>
+                {{ formatDate(ticket.order_id.event_id.end_at) }}
+              </UiTableCell>
+              <UiTableCell>
+                <span
+                  :class="OrderStateStyles(ticket.order_id.status)"
+                  class="px-2 py-1 shadow-sm uppercase rounded text-xs font-semibold"
+                >
+                  {{ ticket.order_id.status }}
+                </span>
+              </UiTableCell>
+              <UiTableCell>
+                <code>
+                  {{ ticket.code }}
+                </code>
+              </UiTableCell>
+              <UiTableCell>
+                <code>
+                  {{ priceFormat(ticket.order_id.final_amount || 0) }}
+                </code>
+              </UiTableCell>
+              <UiTableCell>
+                {{
+                  `${ticket.user_id?.first_name} ${ticket.user_id?.last_name}`
+                }}
+              </UiTableCell>
+              <UiTableCell>
+                {{ formatDate(ticket.purchased_at) }}
+              </UiTableCell>
+
               <UiTableCell>
                 <UiButton variant="outline">View</UiButton>
               </UiTableCell>
             </UiTableRow>
           </template>
-          <UiTableRow>
+          <UiTableRow v-else>
             <UiTableCell />
             <UiTableCell />
             <UiTableCell />
@@ -95,116 +142,52 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from "vue";
 import { QUERY_KEYS } from "~/constants/query-keys";
+import type { ResponseSchemaType } from "~/types/backend-response";
+import type { TicketTable } from "~/types/tickets";
 
 const searchQuery = ref("");
 const eventFilter = ref("");
 const stateFilter = ref("");
 const dateFilter = ref("");
 const { userStore } = useUser();
-const { data: TicketsList, error } = useFetch(
-  `/api/tickets/user/${userStore.value?.id}`,
-  {
-    key: QUERY_KEYS.TICKETS,
-    method: "GET",
-    watch: [() => userStore.value?.id],
-    immediate: Boolean(userStore.value?.id),
-  }
-);
-console.log("TicketsList: ", TicketsList.value);
-console.log("TicketsList error: ", error.value);
-
+const { data: ticketsList, error } = useFetch<
+  ResponseSchemaType<Array<TicketTable>>
+>(`/api/tickets/user/${userStore.value?.id}`, {
+  key: QUERY_KEYS.TICKETS,
+  method: "GET",
+  watch: [() => userStore.value?.id],
+  immediate: Boolean(userStore.value?.id),
+});
 const headers = [
   { key: "id", label: "Ticket ID" },
+  { key: "eventImage", label: "image" },
   { key: "eventName", label: "Event Name" },
+  { key: "eventDateStart", label: "Event Start" },
+  { key: "eventDateEnd", label: "Event End" },
   { key: "state", label: "State" },
+  { key: "code", label: "Code" },
+  { key: "totalAmount", label: "Total Amount" },
   { key: "ownerName", label: "Owner Name" },
   { key: "purchaseDate", label: "Purchase Date" },
-  { key: "eventDate", label: "Event Date" },
   { key: "actions", label: "Actions" },
 ];
 
-// Sample data
-const tickets = ref([
-  {
-    id: "TICK-001",
-    eventName: "Tech Conference 2024",
-    state: "active",
-    ownerName: "Ahmed Mohamed",
-    purchaseDate: "2024-03-15",
-    eventDate: "2024-04-20",
-  },
-  {
-    id: "TICK-002",
-    eventName: "Music Festival",
-    state: "used",
-    ownerName: "Sarah Ali",
-    purchaseDate: "2024-02-28",
-    eventDate: "2024-03-10",
-  },
-  {
-    id: "TICK-003",
-    eventName: "Business Workshop",
-    state: "cancelled",
-    ownerName: "Mohammed Hassan",
-    purchaseDate: "2024-03-01",
-    eventDate: "2024-03-25",
-  },
-  {
-    id: "TICK-004",
-    eventName: "Tech Conference 2024",
-    state: "active",
-    ownerName: "Fatima Ahmed",
-    purchaseDate: "2024-03-16",
-    eventDate: "2024-04-20",
-  },
-  {
-    id: "TICK-005",
-    eventName: "Art Exhibition",
-    state: "active",
-    ownerName: "Omar Khalil",
-    purchaseDate: "2024-03-10",
-    eventDate: "2024-04-05",
-  },
-]);
-
-const uniqueEvents = computed(() => {
-  return [...new Set(tickets.value.map((ticket) => ticket.eventName))];
-});
-
-const filteredTickets = computed(() => {
-  return tickets.value.filter((ticket) => {
-    const matchesSearch =
-      !searchQuery.value ||
-      ticket.eventName
-        .toLowerCase()
-        .includes(searchQuery.value.toLowerCase()) ||
-      ticket.id.toLowerCase().includes(searchQuery.value.toLowerCase());
-
-    const matchesEvent =
-      !eventFilter.value || ticket.eventName === eventFilter.value;
-    const matchesState =
-      !stateFilter.value || ticket.state === stateFilter.value;
-    const matchesDate =
-      !dateFilter.value || ticket.eventDate === dateFilter.value;
-
-    return matchesSearch && matchesEvent && matchesState && matchesDate;
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString("en-EG", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
   });
-});
-
-const getStateClass = (state) => {
-  const classes = {
-    active: "bg-green-100 text-green-800",
-    used: "bg-gray-100 text-gray-800",
-    cancelled: "bg-red-100 text-red-800",
-  };
-  return classes[state] || "bg-gray-100 text-gray-800";
 };
 
-const formatDate = (date) => {
-  return new Date(date).toLocaleDateString();
+const priceFormat = (price: number) => {
+  return new Intl.NumberFormat("en-EG", {
+    style: "currency",
+    currency: "EGP",
+  }).format(price);
 };
 
 definePageMeta({

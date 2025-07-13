@@ -56,7 +56,34 @@ export class Ticket {
     try {
       const { data, error } = await this.supabase
         .from("tickets")
-        .select("*")
+        .select(
+          `
+          id,
+          code,
+          ticket_type_id (
+            name,
+            price
+          ),
+          purchased_at,
+          user_id (
+            id,
+            first_name,
+            last_name
+          ),
+          order_id (
+            id,
+            final_amount,
+            status,
+            event_id (
+              id,
+              image,
+              name,
+              start_at,
+              end_at
+            )
+          )
+        `
+        )
         .eq("user_id", userId);
       if (error) {
         throw new Error(error.message);
