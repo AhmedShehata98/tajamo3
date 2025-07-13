@@ -1,6 +1,6 @@
 <template>
   <NuxtLink
-    class="flex items-center justify-between-start gap-2 transition-colors rounded-sm duration-500 px-5 py-1.5 text-sm font-semibold capitalize hover:bg-accent/25"
+    class="flex items-center justify-between-start gap-2 transition-colors rounded-sm text-slate-200 duration-500 px-5 py-1.5 text-sm font-semibold capitalize hover:bg-accent/25"
     :class="{
       'bg-accent/90 backdrop-blur-md font-bold text-white pointer-events-none':
         $route.path.endsWith(to),

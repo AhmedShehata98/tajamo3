@@ -75,7 +75,7 @@
             </div>
 
             <button
-              class="px-4 py-2 text-sm bg-secondary/40 hover:bg-secondary/90 rounded-xl"
+              class="px-4 py-2 text-slate-600 text-sm bg-accent/20 font-semibold hover:bg-accent/90 hover:text-slate-100 rounded-sm"
             >
               View Details
             </button>
@@ -105,7 +105,7 @@
             </div>
 
             <button
-              class="px-4 py-2 text-sm bg-card hover:bg-accent/10 rounded-sm"
+              class="px-4 py-2 text-slate-600 text-sm bg-accent/20 font-semibold hover:bg-accent/90 hover:text-slate-100 rounded-sm"
             >
               View Details
             </button>
@@ -135,7 +135,7 @@
             </div>
 
             <button
-              class="px-4 py-2 text-sm bg-secondary/40 hover:bg-secondary/90 rounded-xl"
+              class="px-4 py-2 text-slate-600 text-sm bg-accent/20 font-semibold hover:bg-accent/90 hover:text-slate-100 rounded-sm"
             >
               View Details
             </button>

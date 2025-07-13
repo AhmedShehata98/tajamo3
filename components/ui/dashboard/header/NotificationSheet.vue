@@ -15,7 +15,7 @@
           :disabled="inPendingMarkAllAsRead"
         >
           <span v-if="!inPendingMarkAllAsRead" class="flex items-center gap-2">
-            <p class="text-inherit">mark all as read</p>
+            <p class="text-inherit font-semibold">mark all as read</p>
             <Icon name="lucide:check" class="inline-block" />
           </span>
           <Icon

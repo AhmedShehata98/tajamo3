@@ -26,9 +26,9 @@ export const dateFormatter = (date: string | undefined) => {
     const formatter = new Intl.DateTimeFormat("en-US", {
       year: "numeric",
       month: "long",
-      day: "numeric",
+      day: "2-digit",
       hour: "numeric",
-      minute: "numeric",
+      minute: "2-digit",
       hour12: true,
     });
     return formatter.format(dateObj);

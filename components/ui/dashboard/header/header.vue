@@ -5,7 +5,7 @@
     <div>
       <form action="" class="w-56">
         <span
-          class="relative flex items-center justify-start gap-2 rounded-md bg-input px-3.5"
+          class="relative flex items-center justify-start gap-2 rounded-md input px-3.5"
         >
           <label
             for="search"
@@ -16,7 +16,7 @@
           <input
             type="text"
             placeholder="Search"
-            class="w-full px-4 py-2 rounded-sm bg-input"
+            class="w-full px-4 py-2 rounded-sm focus:outline-none focus:border-none"
           />
         </span>
       </form>
@@ -26,7 +26,7 @@
         <UiDashboardHeaderNotificationSheet>
           <button
             type="button"
-            class="relative w-10 h-10 rounded-full flex items-center justify-center text-white bg-accent"
+            class="relative w-10 h-10 rounded-full flex items-center justify-center text-white bg-slate-800 hover:bg-slate-600 transition-colors"
           >
             <span
               v-if="unreadNotificationsCount > 0"
@@ -39,14 +39,14 @@
         </UiDashboardHeaderNotificationSheet>
         <button
           type="button"
-          class="w-10 h-10 rounded-full flex items-center justify-center text-white bg-accent"
+          class="relative w-10 h-10 rounded-full flex items-center justify-center text-white bg-slate-800 hover:bg-slate-600 transition-colors"
         >
           <Icon name="heroicons:moon" class="text-xl" />
         </button>
       </div>
       <UiDropdownMenu>
         <UiDropdownMenuTrigger as-child>
-          <p class="text-sm font-medium capitalize leading-3 cursor-pointer">
+          <p class="text-sm font-semibold capitalize leading-3 cursor-pointer">
             {{ fullName }}
           </p>
           <nuxt-img

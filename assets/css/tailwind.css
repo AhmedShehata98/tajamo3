@@ -50,7 +50,7 @@
 }
 
 :root {
-  --background: #faf9f6;
+  --background: #f4f6fa;
   --foreground: oklch(0.145 0 0);
   --card: #ffffff;
   --card-foreground: oklch(0.145 0 0);
@@ -59,18 +59,18 @@
   /*  */
   --primary: #faf9f6;
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: #f4a261;
+  --secondary: #0e2148;
   --secondary-foreground: oklch(0.205 0 0);
-  --text-primary: #333333;
+  --text-primary: #2a4759;
   --text-secondary: #727272;
-  --accent: #d72638;
+  --accent: #129990;
   /*  */
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: #f4a3613d;
+  --border: #d3d9e6;
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
@@ -177,7 +177,7 @@
     @apply bg-[#22C55E] text-text-primary rounded-sm px-3 py-1.5 hover:bg-[#16A34A];
   }
   .card {
-    @apply bg-secondary rounded-sm border border-[#ffffff33] p-3;
+    @apply bg-secondary rounded-sm border border-(--border) shadow-[#0e2148cc] p-3;
   }
   .link {
     @apply text-sm text-[#0284C7] hover:text-[#0284CC];
@@ -187,6 +187,7 @@
   }
   .glass-card {
     @apply bg-(--card) border-[1.5px] border-(--border) rounded-lg p-4 backdrop-blur-sm;
+    box-shadow: 0 4px 6px rgba(14, 33, 72, 0.08);
   }
 }
 

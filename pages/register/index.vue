@@ -1,29 +1,8 @@
 <template>
-  <div class="min-h-screen flex items-stretch bg-gray-100">
-    <!-- Left Side: Illustration & Welcome -->
-    <div
-      class="hidden md:flex flex-col justify-center items-center w-1/2 bg-accent p-12"
-    >
-      <div class="mb-8">
-        <img
-          src="/images/auth-register-bg.png"
-          alt="Lovebirds"
-          class="w-full h-full object-cover rounded-lg"
-        />
-      </div>
-      <div class="text-center">
-        <h2 class="text-2xl font-semibold text-white mb-2">
-          Welcome to event management platform
-        </h2>
-        <p class="text-white/50 max-w-md text-sm mx-auto">
-          Event management platform is a platform for managing events and
-          creating events for your friends and family.
-        </p>
-      </div>
-    </div>
+  <div class="min-h-screen flex items-center justify-center bg-[#EAEFEF]">
     <!-- Right Side: Register Form -->
     <div
-      class="flex flex-col justify-center items-center w-full md:w-1/2 bg-white p-8 md:p-16 shadow-lg"
+      class="flex flex-col justify-center items-center w-full md:w-fit rounded-md bg-white p-8 md:p-14 shadow-md"
     >
       <div class="w-full max-w-sm">
         <div class="mb-8 text-center">
@@ -38,7 +17,7 @@
               class="text-2xl text-gray-500 hover:text-gray-700 transition-colors duration-200"
             />
           </button>
-          <h1 class="font-logo text-3xl mb-2">event management platform</h1>
+          <h1 class="font-logo text-accent text-3xl mb-5">Tajammoa</h1>
           <h2 class="text-xl font-semibold text-gray-800 mb-1">
             Create New Account
           </h2>

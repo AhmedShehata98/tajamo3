@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative flex gap-3 p-3 rounded-sm bg-secondary backdrop-blur-md border border-border"
+    class="relative flex gap-3 p-3 rounded-sm bg-primary backdrop-blur-md border border-border"
   >
     <span
       v-show="!notification.is_read"

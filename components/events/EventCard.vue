@@ -38,16 +38,18 @@
           {{ event.event_type }}
         </p>
       </span>
-      <h3 class="text-lg text-accent font-semibold">{{ event.name }}</h3>
+      <h3 class="text-xl text-text-primary font-semibold">{{ event.name }}</h3>
       <p
-        class="h-8 overflow-hidden text-xs hover:overflow-visible hover:h-auto transition-[height] duration-300"
+        class="h-10 text-text-secondary overflow-hidden text-sm hover:overflow-visible hover:h-auto transition-[height] duration-300"
       >
         {{ event.description }}
       </p>
       <ul class="grid grid-cols-1 text-text-primary gap-1.5 mt-auto pt-3">
-        <li class="text-sm flex items-center gap-2 overflow-hidden">
+        <li
+          class="text-sm flex items-center justify-start align-start gap-2 overflow-hidden font-semibold"
+        >
           <span
-            class="flex items-center justify-center bg-accent/20 rounded-full min-w-7 min-h-7"
+            class="flex items-center justify-center self-start bg-accent/20 rounded-full min-w-7 min-h-7"
           >
             <Icon name="mdi:location" class="text-xl text-accent" />
           </span>
@@ -59,7 +61,9 @@
             }}
           </p>
         </li>
-        <li class="text-sm flex items-center gap-2 overflow-hidden">
+        <li
+          class="text-sm flex items-center justify-start gap-2 overflow-hidden font-semibold"
+        >
           <span
             class="flex items-center justify-center bg-accent/20 rounded-full min-w-7 min-h-7"
           >
@@ -69,7 +73,9 @@
             {{ dateFormatter(event.start_at) }}
           </p>
         </li>
-        <li class="text-sm flex items-center gap-2 overflow-hidden mt-1.5">
+        <li
+          class="text-sm flex items-center justify-start gap-2 overflow-hidden mt-1.5 font-semibold"
+        >
           <span
             class="flex items-center justify-center bg-accent/20 rounded-full min-w-7 min-h-7"
           >
