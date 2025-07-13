@@ -15,7 +15,9 @@
         <p class="text-white font-medium text-sm">Create Event</p>
       </NuxtLink>
     </div>
-    <div class="w-full flex items-center gap-5 justify-between mt-5">
+    <div
+      class="w-full flex items-center gap-5 justify-between max-md:flex-col max-md:gap-2 mt-5"
+    >
       <span
         class="w-full flex bg-input p-1 rounded-sm items-center justify-start"
       >
@@ -33,10 +35,10 @@
           placeholder="search in events ..."
         />
       </span>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-3 max-md:w-full">
         <select
           v-model="eventType"
-          class="bg-input p-1.5 rounded-sm text-sm text-muted-foreground min-w-48"
+          class="max-md:w-full input p-1.5 rounded-sm text-sm text-muted-foreground min-w-48"
         >
           <option value="" selected disabled>Select event type</option>
           <option v-for="type in EventType" :key="type" :value="type">

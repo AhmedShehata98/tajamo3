@@ -7,9 +7,11 @@
         class="w-full h-full object-cover"
       />
       <div
-        class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/90 rounded-t-sm flex items-end justify-between justify-end p-4"
+        class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/90 rounded-t-sm flex items-end justify-between justify-end max-md:flex-col max-md:items-center max-md:justify-end p-4"
       >
-        <div class="flex flex-col items-start space-y-6 flex-1">
+        <div
+          class="max-md:w-full flex flex-col items-start space-y-6 md:flex-1"
+        >
           <span
             v-if="eventDetails?.data?.event_type"
             :class="eventTypeBackgroundFactory(eventDetails?.data?.event_type)"
@@ -17,13 +19,13 @@
           >
             {{ eventDetails?.data?.event_type }}
           </span>
-          <h3 class="text-white text-2xl font-bold mb-3">
+          <h3 class="text-white md:text-2xl font-bold mb-3">
             {{ eventDetails?.data?.name }}
           </h3>
         </div>
         <div
           v-if="status === 'success'"
-          class="flex items-center justify-start gap-2"
+          class="max-md:w-full flex items-center justify-start gap-2"
         >
           <UiButton type="button" variant="outline">
             <Icon name="mdi:share" class="w-4 h-4" />
@@ -107,7 +109,9 @@
         </li>
       </ul>
     </div>
-    <div class="w-full flex items-start justify-start gap-4 py-2 px-4">
+    <div
+      class="w-full flex items-start justify-start max-md:flex-col gap-4 py-2 px-4"
+    >
       <ul
         class="w-full md:w-1/2 lg:w-[60%] flex items-center flex-col justify-start gap-4"
       >

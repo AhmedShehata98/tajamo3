@@ -56,7 +56,9 @@
 
     <!-- Tickets Table -->
     <div class="w-full flex overflow-hidden bg-card rounded-md p-2">
-      <div class="max-w-[calc(100vw-18rem)]">
+      <div
+        class="max-w-[calc(100vw-4rem)] lg:max-w-[calc(100vw-8rem)] xl:max-w-[calc(100vw-16rem)]"
+      >
         <UiTable>
           <UiTableCaption> Tickets </UiTableCaption>
           <UiTableHeader>

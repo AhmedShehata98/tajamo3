@@ -2,8 +2,22 @@
   <header
     class="sticky top-0 left-0 z-50 isolate w-full flex items-center justify-between px-4 py-3 border-b bg-transparent backdrop-blur-md border-border"
   >
-    <div>
-      <form action="" class="w-56">
+    <div class="flex items-center justify-start gap-4">
+      <button
+        type="button"
+        class="flex items-center justify-center w-10 h-10 rounded-md hover:bg-muted transition-colors lg:hidden"
+        @click="$emit('toggle-sidebar')"
+      >
+        <Icon
+          :name="
+            isOpenSidebar
+              ? 'iconamoon:close-fill'
+              : 'heroicons:bars-3-center-left-20-solid'
+          "
+          class="text-3xl text-muted-foreground max-md:hidden"
+        />
+      </button>
+      <form action="" class="max-md:hidden w-56">
         <span
           class="relative flex items-center justify-start gap-2 rounded-md input px-3.5"
         >
@@ -117,4 +131,11 @@ const handleLogout = async () => {
     console.error(error);
   }
 };
+defineEmits<{
+  (e: "toggle-sidebar"): void;
+}>();
+
+defineProps<{
+  isOpenSidebar: boolean;
+}>();
 </script>

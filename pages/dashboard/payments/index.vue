@@ -1,7 +1,9 @@
 <template>
   <div class="flex flex-col gap-4 p-4">
     <h1 class="text-2xl font-bold text-text-primary">Payments</h1>
-    <div class="w-fit flex items-start justify-start gap-4 p-2 glass-card">
+    <div
+      class="w-fit max-md:w-full flex items-start justify-start gap-4 p-2 glass-card"
+    >
       <figure>
         <img
           :src="eventDetailsState.event?.image"
@@ -35,11 +37,13 @@
       </div>
     </div>
     <div
-      class="flex flex-col items-center justify-start gap-4 bg-class p-4 h-[calc(100vh-10rem)]"
+      class="flex flex-col items-center justify-start gap-4 bg-class max-md:p-0 p-4 mt-5 h-[calc(100vh-10rem)]"
     >
-      <ul class="w-4/5 flex flex-col gap-2 grid grid-cols-2 gap-4">
+      <ul
+        class="w-4/5 max-md:w-full flex flex-col gap-2 grid grid-cols-1 md:grid-cols-2 gap-4"
+      >
         <li
-          class="flex flex-col items-center gap-2 glass-card p-6 hover:scale-105 hover:translate-y-[-14px] transition-all duration-300"
+          class="max-md:w-full flex flex-col items-center gap-2 glass-card p-6 hover:scale-105 hover:translate-y-[-14px] transition-all duration-300"
         >
           <h4 class="text-3xl text-center font-bold text-text-primary">
             Fawry
