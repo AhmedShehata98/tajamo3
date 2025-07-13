@@ -1,5 +1,7 @@
 <template>
-  <div class="w-full flex-col flex items-start justify-start p-4 space-y-6">
+  <div
+    class="relative w-full max-w-full flex-col flex items-start justify-start p-4 space-y-6"
+  >
     <div class="w-full flex justify-between items-center">
       <h1 class="text-2xl font-bold text-text-primary">Tickets</h1>
       <button
@@ -53,91 +55,93 @@
     </div>
 
     <!-- Tickets Table -->
-    <div class="w-full max-w-full overflow-x-auto bg-card rounded-md p-2">
-      <UiTable>
-        <UiTableCaption> Tickets </UiTableCaption>
-        <UiTableHeader>
-          <UiTableRow>
-            <UiTableHead
-              v-for="header in headers"
-              :key="header.key"
-              class="text-left"
-            >
-              {{ header.label }}
-            </UiTableHead>
-          </UiTableRow>
-        </UiTableHeader>
-        <UiTableBody>
-          <template v-if="ticketsList && ticketsList.data.length >= 1">
-            <UiTableRow v-for="ticket in ticketsList.data" :key="ticket.id">
-              <UiTableCell>
-                {{ `#${ticket.id}` }}
-              </UiTableCell>
-              <UiTableCell>
-                <img
-                  class="inline-block rounded-md object-cover"
-                  :src="ticket.order_id.event_id.image"
-                  alt="event-img"
-                />
-              </UiTableCell>
-              <UiTableCell>
-                <strong
-                  class="inline-block text-sm font-semibold min-w-[10rem] max-w-[13rem] text-wrap"
-                >
-                  {{ ticket.order_id.event_id.name }}
-                </strong>
-              </UiTableCell>
-              <UiTableCell>
-                {{ formatDate(ticket.order_id.event_id.start_at) }}
-              </UiTableCell>
-              <UiTableCell>
-                {{ formatDate(ticket.order_id.event_id.end_at) }}
-              </UiTableCell>
-              <UiTableCell>
-                <span
-                  :class="OrderStateStyles(ticket.order_id.status)"
-                  class="px-2 py-1 shadow-sm uppercase rounded text-xs font-semibold"
-                >
-                  {{ ticket.order_id.status }}
-                </span>
-              </UiTableCell>
-              <UiTableCell>
-                <code>
-                  {{ ticket.code }}
-                </code>
-              </UiTableCell>
-              <UiTableCell>
-                <code>
-                  {{ priceFormat(ticket.order_id.final_amount || 0) }}
-                </code>
-              </UiTableCell>
-              <UiTableCell>
-                {{
-                  `${ticket.user_id?.first_name} ${ticket.user_id?.last_name}`
-                }}
-              </UiTableCell>
-              <UiTableCell>
-                {{ formatDate(ticket.purchased_at) }}
-              </UiTableCell>
-
-              <UiTableCell>
-                <UiButton variant="outline">View</UiButton>
-              </UiTableCell>
+    <div class="w-full flex overflow-hidden bg-card rounded-md p-2">
+      <div class="max-w-[calc(100vw-18rem)]">
+        <UiTable>
+          <UiTableCaption> Tickets </UiTableCaption>
+          <UiTableHeader>
+            <UiTableRow>
+              <UiTableHead
+                v-for="header in headers"
+                :key="header.key"
+                class="text-left"
+              >
+                {{ header.label }}
+              </UiTableHead>
             </UiTableRow>
-          </template>
-          <UiTableRow v-else>
-            <UiTableCell />
-            <UiTableCell />
-            <UiTableCell />
-            <UiTableCell class="text-center text-gray-400 py-8 font-bold">
-              No tickets found matching your criteria.
-            </UiTableCell>
-            <UiTableCell />
-            <UiTableCell />
-            <UiTableCell />
-          </UiTableRow>
-        </UiTableBody>
-      </UiTable>
+          </UiTableHeader>
+          <UiTableBody>
+            <template v-if="ticketsList && ticketsList.data.length >= 1">
+              <UiTableRow v-for="ticket in ticketsList.data" :key="ticket.id">
+                <UiTableCell>
+                  {{ `#${ticket.id}` }}
+                </UiTableCell>
+                <UiTableCell>
+                  <img
+                    class="inline-block rounded-md object-cover"
+                    :src="ticket.order_id.event_id.image"
+                    alt="event-img"
+                  />
+                </UiTableCell>
+                <UiTableCell>
+                  <strong
+                    class="inline-block text-sm font-semibold min-w-[10rem] max-w-[13rem] text-wrap"
+                  >
+                    {{ ticket.order_id.event_id.name }}
+                  </strong>
+                </UiTableCell>
+                <UiTableCell>
+                  {{ formatDate(ticket.order_id.event_id.start_at) }}
+                </UiTableCell>
+                <UiTableCell>
+                  {{ formatDate(ticket.order_id.event_id.end_at) }}
+                </UiTableCell>
+                <UiTableCell>
+                  <span
+                    :class="OrderStateStyles(ticket.order_id.status)"
+                    class="px-2 py-1 shadow-sm uppercase rounded text-xs font-semibold"
+                  >
+                    {{ ticket.order_id.status }}
+                  </span>
+                </UiTableCell>
+                <UiTableCell>
+                  <code>
+                    {{ ticket.code }}
+                  </code>
+                </UiTableCell>
+                <UiTableCell>
+                  <code>
+                    {{ priceFormat(ticket.order_id.final_amount || 0) }}
+                  </code>
+                </UiTableCell>
+                <UiTableCell>
+                  {{
+                    `${ticket.user_id?.first_name} ${ticket.user_id?.last_name}`
+                  }}
+                </UiTableCell>
+                <UiTableCell>
+                  {{ formatDate(ticket.purchased_at) }}
+                </UiTableCell>
+
+                <UiTableCell>
+                  <UiButton variant="outline">View</UiButton>
+                </UiTableCell>
+              </UiTableRow>
+            </template>
+            <UiTableRow v-else>
+              <UiTableCell />
+              <UiTableCell />
+              <UiTableCell />
+              <UiTableCell class="text-center text-gray-400 py-8 font-bold">
+                No tickets found matching your criteria.
+              </UiTableCell>
+              <UiTableCell />
+              <UiTableCell />
+              <UiTableCell />
+            </UiTableRow>
+          </UiTableBody>
+        </UiTable>
+      </div>
     </div>
   </div>
 </template>
@@ -196,5 +200,14 @@ definePageMeta({
     mode: "default",
   },
   layout: "dashboard",
+});
+useHeadSafe({
+  title: "Tickets - Dashboard",
+  meta: [
+    {
+      name: "description",
+      content: "Manage your tickets and view details in the dashboard.",
+    },
+  ],
 });
 </script>

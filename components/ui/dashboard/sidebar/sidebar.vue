@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="min-h-screen w-(--sidebar-width) bg-secondary backdrop-blur-md border-r border-r-border sticky top-0 left-0 z-50"
+    class="min-h-screen min-w-(--sidebar-width) w-(--sidebar-width) bg-secondary backdrop-blur-md border-r border-r-border sticky top-0 left-0 z-50"
   >
     <div class="w-full flex items-center justify-between px-6 py-4">
       <h1 class="text-2xl font-bold text-accent">Tajamoe</h1>
