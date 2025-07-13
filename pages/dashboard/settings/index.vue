@@ -9,7 +9,7 @@
       </p>
     </span>
     <ul
-      class="w-fit flex items-center justify-start gap-2 bg-secondary rounded-sm mt-5 p-1.5"
+      class="w-fit flex items-center justify-start gap-2 bg-card rounded-sm mt-5 p-1.5"
     >
       <li>
         <button
@@ -56,7 +56,7 @@
     </ul>
     <div
       v-if="activeTab === 'profile'"
-      class="w-full flex flex-col p-3 bg-zinc-200/80 backdrop-blur-md items-start justify-center gap-2 rounded-sm mt-5"
+      class="w-full flex flex-col p-3 bg-card backdrop-blur-md items-start justify-center gap-2 rounded-sm mt-5"
     >
       <span class="w-full flex flex-col items-start justify-center gap-3">
         <h3 class="font-semibold text-2xl text-start text-text-primary">

@@ -160,9 +160,7 @@
 
 @layer components {
   .input {
-    @apply text-foreground rounded-sm border px-3 py-1 focus:outline-none focus:border-primary focus:bg-[#fdfdfdde];
-    background-color: #fdfdfda0;
-    border-color: #fdfdfd9b;
+    @apply text-foreground bg-gray-200 rounded-sm border focus:border-secondary px-3 py-1 focus:outline-none;
   }
   .form-label {
     @apply text-sm font-medium text-[#E2E8F0];
