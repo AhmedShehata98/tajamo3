@@ -2,8 +2,8 @@
   <aside
     class="min-h-screen w-full min-w-full md:min-w-(--sidebar-width) md:w-(--sidebar-width) bg-secondary backdrop-blur-md border-r border-r-border sticky top-0 left-0 z-50 max-lg:absolute max-md:top-16 max-lg:top-19 max-md:left-0 max-md:w-full max-md:min-w-full max-md:border-none overflow-x-auto transition-all duration-300 ease-in-out"
     :class="{
-      'opacity-100 translate-x-0': isOpenSidebar,
-      'opacity-50 -translate-x-full': !isOpenSidebar,
+      'max-md:opacity-100 max-md:translate-x-0': isOpenSidebar,
+      'max-md:opacity-50 max-md:-translate-x-full': !isOpenSidebar,
     }"
   >
     <div class="w-full flex items-center justify-between px-6 py-4">
