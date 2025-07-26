@@ -7,7 +7,8 @@ export default defineNuxtConfig({
   modules: [
     "@nuxt/fonts",
     "@nuxt/icon",
-    "@nuxt/image",
+    // Temporarily disable @nuxt/image to fix initialization error
+    // "@nuxt/image",
     "shadcn-nuxt",
     "@nuxtjs/leaflet",
     "nuxt-vue3-google-signin",

@@ -233,8 +233,7 @@
           <button
             type="button"
             class="w-full flex items-center justify-center gap-2 py-3 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium transition-all duration-200"
-            @click="login"
-            :disabled="!isReady"
+            @click="signIn('google')"
           >
             <img
               src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -242,6 +241,18 @@
               class="w-5 h-5"
             />
             Sign up with Google
+          </button>
+          <button
+            type="button"
+            class="w-full flex items-center justify-center gap-2 py-3 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium transition-all duration-200"
+            @click="signIn('github')"
+          >
+            <img
+              src="https://www.svgrepo.com/show/448447/github.svg"
+              alt="Google"
+              class="w-5 h-5"
+            />
+            Sign up with github
           </button>
           <div class="text-center mt-4 text-sm text-gray-500">
             Already have an account?
@@ -271,10 +282,8 @@ import type { UserForm } from "~/types/users";
 const router = useRouter();
 const isSendOtpCode = ref(false);
 const isPending = ref(false);
-const { isReady, login } = useCodeClient({
-  onSuccess: handleRegisterWithGoogle,
-  onError: handleRegisterWithGoogleError,
-});
+const { signIn } = useAuth();
+
 const {
   start: startCountdown,
   stop: stopCountdown,

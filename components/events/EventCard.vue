@@ -3,14 +3,13 @@
     class="w-full flex flex-col justify-start glass-card p-0 group overflow-hidden hover:scale-102 hover:translate-y-[-5px] transition-all duration-300"
   >
     <figure class="relative h-[225px]">
-      <nuxt-img
+      <!-- Temporarily replaced nuxt-img with standard img tag due to @nuxt/image initialization issue -->
+      <img
         :src="event.image"
         alt="Event Image"
         width="678"
         height="320"
-        format="webp"
         loading="lazy"
-        quality="678"
         class="w-full h-full object-cover rounded-t-sm"
       />
       <div

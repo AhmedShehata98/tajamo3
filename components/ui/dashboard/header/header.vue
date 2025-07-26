@@ -63,7 +63,8 @@
           <p class="text-sm font-semibold capitalize leading-3 cursor-pointer">
             {{ fullName }}
           </p>
-          <nuxt-img
+          <!-- Temporarily replaced nuxt-img with standard img tag due to @nuxt/image initialization issue -->
+          <img
             src="https://picsum.photos/200"
             alt="avatar"
             width="40"
