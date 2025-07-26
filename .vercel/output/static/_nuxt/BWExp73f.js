@@ -1,0 +1,1 @@
+import{d as t,a,L as s,n,b as r}from"./CMCxBn70.js";const m=t({__name:"auth",props:{type:{}},setup(l){return(e,o)=>(r(),a("main",{class:"relative w-full min-h-screen flex items-center justify-center",style:n({backgroundImage:`url(${e.type==="login"?"/images/auth-login-bg.jpg":"/images/auth-register-bg.jpg"})`})},[s(e.$slots,"default")],4))}});export{m as default};

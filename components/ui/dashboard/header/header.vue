@@ -1,6 +1,6 @@
 <template>
   <header
-    class="sticky top-0 left-0 z-50 isolate w-full flex items-center justify-between px-4 py-3 border-b bg-transparent backdrop-blur-md border-border"
+    class="sticky top-0 left-0 z-50 isolate w-full flex items-center justify-between px-4 py-3 border-b bg-[#FCFCFD] backdrop-blur-md border-border"
   >
     <div class="flex items-center justify-start gap-4">
       <button
@@ -30,7 +30,7 @@
           <input
             type="text"
             placeholder="Search"
-            class="w-full px-4 py-2 rounded-sm focus:outline-none focus:border-none"
+            class="w-full px-4 py-1 rounded focus:outline-none focus:border-none"
           />
         </span>
       </form>

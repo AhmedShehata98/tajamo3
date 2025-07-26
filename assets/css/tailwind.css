@@ -57,13 +57,13 @@
   --popover: #e9e9e9;
   --popover-foreground: oklch(0.145 0 0);
   /*  */
-  --primary: #faf9f6;
+  --primary: #7f56d9;
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: #0e2148;
+  --secondary: #0086c9;
   --secondary-foreground: oklch(0.205 0 0);
   --text-primary: #2a4759;
   --text-secondary: #727272;
-  --accent: #129990;
+  --accent: #6941c6;
   /*  */
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
@@ -160,7 +160,7 @@
 
 @layer components {
   .input {
-    @apply text-foreground bg-gray-200 rounded-sm border focus:border-secondary px-3 py-1 focus:outline-none;
+    @apply text-foreground bg-[#EAECF0] rounded-sm border border-[#98A2B3] focus:border-[#D0D5DD] px-3 py-1 focus:outline-none;
   }
   .form-label {
     @apply text-sm font-medium text-[#E2E8F0];
@@ -175,7 +175,8 @@
     @apply bg-[#22C55E] text-text-primary rounded-sm px-3 py-1.5 hover:bg-[#16A34A];
   }
   .card {
-    @apply bg-secondary rounded-sm border border-(--border) shadow-[#0e2148cc] p-3;
+    @apply bg-[#F9FAFB] rounded-sm border border-[#F2F4F7] p-3;
+    box-shadow: 0px 1px 2px 0px #1018280d;
   }
   .link {
     @apply text-sm text-[#0284C7] hover:text-[#0284CC];
@@ -184,8 +185,8 @@
     color: #bbbbbb;
   }
   .glass-card {
-    @apply bg-(--card) border-[1.5px] border-(--border) rounded-lg p-4 backdrop-blur-sm;
-    box-shadow: 0 4px 6px rgba(14, 33, 72, 0.08);
+    @apply bg-[#F9FAFB] border-[1.5px] border-[#EAECF0] rounded-sm p-4 backdrop-blur-sm;
+    box-shadow: 0px 1px 2px 0px #1018280f;
   }
 }
 

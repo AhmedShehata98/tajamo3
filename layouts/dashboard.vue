@@ -6,7 +6,7 @@
       :is-open-sidebar="isOpenSidebar"
       @toggle-sidebar="() => (isOpenSidebar = !isOpenSidebar)"
     />
-    <section class="flex flex-col flex-1 h-full isolate bg-background">
+    <section class="flex flex-col flex-1 h-full isolate bg-[#F2F4F7]">
       <UiDashboardHeader
         :is-open-sidebar="isOpenSidebar"
         @toggle-sidebar="() => (isOpenSidebar = !isOpenSidebar)"

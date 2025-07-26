@@ -12,7 +12,7 @@
         class="bg-accent px-4 py-2 rounded-sm flex items-center gap-2 backdrop-blur-md hover:bg-primary/80 transition-all duration-300"
       >
         <Icon name="mdi:plus" class="text-xl text-white" />
-        <p class="text-white font-medium text-sm">Create Event</p>
+        <h5 class="text-white font-medium text-sm">Create Event</h5>
       </NuxtLink>
     </div>
     <div

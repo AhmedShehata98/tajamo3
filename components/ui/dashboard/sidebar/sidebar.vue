@@ -1,16 +1,16 @@
 <template>
   <aside
-    class="min-h-screen w-full min-w-full md:min-w-(--sidebar-width) md:w-(--sidebar-width) bg-secondary backdrop-blur-md border-r border-r-border sticky top-0 left-0 z-50 max-lg:absolute max-md:top-16 max-lg:top-19 max-md:left-0 max-md:w-full max-md:min-w-full max-md:border-none overflow-x-auto transition-all duration-300 ease-in-out"
+    class="min-h-screen w-full min-w-full md:min-w-(--sidebar-width) md:w-(--sidebar-width) bg-[#FCFCFD] backdrop-blur-md border-r border-r-border sticky top-0 left-0 z-50 max-lg:absolute max-md:top-16 max-lg:top-19 max-md:left-0 max-md:w-full max-md:min-w-full max-md:border-none overflow-x-auto transition-all duration-300 ease-in-out"
     :class="{
       'max-md:opacity-100 max-md:translate-x-0': isOpenSidebar,
       'max-md:opacity-50 max-md:-translate-x-full': !isOpenSidebar,
     }"
   >
-    <div class="w-full flex items-center justify-between px-6 py-4">
-      <h1 class="text-2xl font-bold text-accent">Tajamoe</h1>
+    <div class="w-full flex items-center justify-between pt-6 pb-2 ps-8">
+      <h1 class="text-xl font-bold uppercase text-[#6941C6]">Tajamou</h1>
     </div>
     <div class="w-full flex flex-col gap-1 mb-5">
-      <ul class="w-full flex flex-col px-2 gap-1">
+      <ul class="w-full flex flex-col px-2 gap-1 mt-5">
         <li class="w-full">
           <UiDashboardSidebarNavLink
             icon="heroicons:home"
@@ -79,7 +79,7 @@
       <nuxt-link
         to="/dashboard/events/create"
         type="button"
-        class="btn bg-accent w-full"
+        class="btn bg-[#6941C6] w-full"
       >
         <p class="text-sm font-medium text-white capitalize leading-3">
           new event
