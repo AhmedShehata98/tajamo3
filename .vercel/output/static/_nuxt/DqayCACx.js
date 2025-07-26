@@ -1,1 +1,0 @@
-import{a,s}from"./M9v_ylco.js";import{r as l}from"./CMCxBn70.js";const r=()=>{const e=a(s.eventDetails,()=>l({event:null,selectedTicketType:null}));return{eventDetailsState:e,handleSetEventDetails:t=>{e.value.event=t},handleSetSelectedTicketType:t=>{e.value.selectedTicketType=t}}};export{r as u};
