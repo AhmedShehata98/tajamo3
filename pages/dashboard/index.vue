@@ -5,55 +5,36 @@
         <li class="glass-card">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold leading-tight">Total Events</h3>
-            <span
-              class="size-9 flex items-center justify-center bg-[#EAECF0] rounded-full"
-            >
-              <Icon name="heroicons:calendar" class="text-xl text-[#7F56D9]" />
-            </span>
+            <Icon name="heroicons:calendar" class="text-2xl text-accent" />
           </div>
           <h2 class="text-3xl font-bold mt-2">156</h2>
           <p class="text-sm secondary-text">+12% from last month</p>
         </li>
+
         <li class="glass-card">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold leading-tight">Upcoming Events</h3>
-            <span
-              class="size-9 flex items-center justify-center bg-[#EAECF0] rounded-full"
-            >
-              <Icon
-                name="heroicons:calendar-days"
-                class="text-xl text-[#7F56D9]"
-              />
-            </span>
+            <Icon name="heroicons:calendar-days" class="text-2xl text-accent" />
           </div>
-          <h2 class="text-3xl font-bold mt-2">38</h2>
+          <h2 class="text-3xl font-bold mt-2">23</h2>
           <p class="text-sm secondary-text">Next 30 days</p>
         </li>
+
         <li class="glass-card">
           <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold leading-tight">Total Attendees</h3>
-            <span
-              class="size-9 flex items-center justify-center bg-[#EAECF0] rounded-full"
-            >
-              <Icon name="heroicons:users" class="text-xl text-[#7F56D9]" />
-            </span>
+            <h3 class="text-lg font-semibold">Total Attendees</h3>
+            <Icon name="heroicons:users" class="text-2xl text-accent" />
           </div>
           <h2 class="text-3xl font-bold mt-2">1,234</h2>
           <p class="text-sm secondary-text">+25% from last month</p>
         </li>
+
         <li class="glass-card">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold leading-tight">Team Members</h3>
-            <span
-              class="size-9 flex items-center justify-center bg-[#EAECF0] rounded-full"
-            >
-              <Icon
-                name="heroicons:user-group"
-                class="text-xl text-[#7F56D9]"
-              />
-            </span>
+            <Icon name="heroicons:user-group" class="text-2xl text-accent" />
           </div>
-          <h2 class="text-3xl font-bold mt-2">134</h2>
+          <h2 class="text-3xl font-bold mt-2">48</h2>
           <p class="text-sm secondary-text">Active members</p>
         </li>
       </ul>
@@ -62,11 +43,11 @@
       <div class="w-full flex items-center justify-between">
         <h1 class="text-xl font-semibold">Upcoming Events</h1>
         <NuxtLink
-          to="/dashboard/calender"
-          class="text-accent hover:underline flex items-center gap-2 bg-[#EAECF0] rounded-sm px-3 py-1.5"
+          to="/dashboard/events"
+          class="text-accent hover:underline flex items-center gap-2 bg-accent/15 rounded-sm px-3 py-1.5"
         >
           <p class="text-sm font-semibold">View all</p>
-          <Icon name="heroicons:arrow-right" class="text-base text-gray-700" />
+          <Icon name="heroicons:arrow-right" class="text-base" />
         </NuxtLink>
       </div>
 
@@ -76,7 +57,7 @@
             <div class="flex items-start gap-4">
               <div class="flex flex-col items-center">
                 <h3 class="text-lg font-semibold">May</h3>
-                <h2 class="text-2xl text-[#6941C6] font-bold">25</h2>
+                <h2 class="text-2xl font-bold">25</h2>
                 <p class="text-sm">2023</p>
               </div>
 
@@ -94,7 +75,7 @@
             </div>
 
             <button
-              class="px-4 py-2 text-[#6941C6] text-sm bg-[#F4EBFF] font-semibold hover:bg-[F4EBFF] hover:text-[#B692F6] rounded-sm"
+              class="px-4 py-2 text-slate-600 text-sm bg-accent/20 font-semibold hover:bg-accent/90 hover:text-slate-100 rounded-sm"
             >
               View Details
             </button>
@@ -106,7 +87,7 @@
             <div class="flex items-start gap-4">
               <div class="flex flex-col items-center">
                 <h3 class="text-lg font-semibold">May</h3>
-                <h2 class="text-3xl text-[#6941C6] font-bold">20</h2>
+                <h2 class="text-2xl font-bold">20</h2>
                 <p class="text-sm">2023</p>
               </div>
 
@@ -124,7 +105,7 @@
             </div>
 
             <button
-              class="px-4 py-2 text-[#6941C6] text-sm bg-[#F4EBFF] font-semibold hover:bg-[F4EBFF] hover:text-[#B692F6] rounded-sm"
+              class="px-4 py-2 text-slate-600 text-sm bg-accent/20 font-semibold hover:bg-accent/90 hover:text-slate-100 rounded-sm"
             >
               View Details
             </button>
@@ -136,7 +117,7 @@
             <div class="flex items-start gap-4">
               <div class="flex flex-col items-center">
                 <h3 class="text-lg font-semibold">June</h3>
-                <h2 class="text-3xl text-[#6941C6] font-bold">5</h2>
+                <h2 class="text-2xl font-bold">5</h2>
                 <p class="text-sm">2023</p>
               </div>
 
@@ -154,7 +135,7 @@
             </div>
 
             <button
-              class="px-4 py-2 text-[#6941C6] text-sm bg-[#F4EBFF] font-semibold hover:bg-[F4EBFF] hover:text-[#B692F6] rounded-sm"
+              class="px-4 py-2 text-slate-600 text-sm bg-accent/20 font-semibold hover:bg-accent/90 hover:text-slate-100 rounded-sm"
             >
               View Details
             </button>
@@ -163,14 +144,14 @@
       </ul>
     </div>
     <div class="w-full flex flex-col gap-4 px-4 py-2 mt-5">
-      <div class="flex items-center justify-between">
+      <div class="w-full flex items-center justify-between">
         <h1 class="text-xl font-semibold">Featured Events</h1>
         <NuxtLink
           to="/dashboard/events"
-          class="text-accent hover:underline flex items-center gap-2 bg-[#EAECF0] rounded-sm px-3 py-1.5"
+          class="text-accent hover:underline flex items-center gap-2 bg-accent/15 rounded-sm px-3 py-1.5"
         >
-          <p class="text-sm font-semibold">View all</p>
-          <Icon name="heroicons:arrow-right" class="text-base text-gray-700" />
+          <p class="text-sm font-semibold">View all events</p>
+          <Icon name="heroicons:arrow-right" class="text-base" />
         </NuxtLink>
       </div>
       <ul

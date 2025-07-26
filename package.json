@@ -11,9 +11,8 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@iconify/utils": "^2.3.0",
     "@nuxt/fonts": "0.11.4",
-    "@nuxt/icon": "1.15.0",
+    "@nuxt/icon": "1.13.0",
     "@nuxt/image": "1.10.0",
     "@nuxtjs/leaflet": "1.2.6",
     "@supabase/supabase-js": "^2.49.6",
