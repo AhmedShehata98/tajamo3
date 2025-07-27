@@ -1,6 +1,6 @@
 <template>
   <div class="app-container flex flex-col">
-    <div class="w-full flex items-start justify-start p-4">
+    <div class="w-full flex items-start justify-start py-4">
       <ul class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
         <li class="glass-card">
           <div class="flex items-center justify-between">
@@ -11,16 +11,18 @@
           <p class="text-sm secondary-text">+12% from last month</p>
         </li>
 
-        <li class="glass-card">
+        <li class="glass-card bg-primary">
           <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold leading-tight">Upcoming Events</h3>
+            <h3 class="text-lg text-white font-semibold leading-tight">
+              Upcoming Events
+            </h3>
             <Icon
               name="heroicons:calendar-days"
               class="text-2xl text-primary"
             />
           </div>
-          <h2 class="text-3xl font-bold mt-2 text-primary">23</h2>
-          <p class="text-sm secondary-text">Next 30 days</p>
+          <h2 class="text-3xl font-bold mt-2 text-gray-100">23</h2>
+          <p class="text-sm text-gray-300">Next 30 days</p>
         </li>
 
         <li class="glass-card">
@@ -42,7 +44,7 @@
         </li>
       </ul>
     </div>
-    <div class="w-full flex flex-col gap-4 px-4 py-2">
+    <div class="w-full flex flex-col gap-4 py-2">
       <div class="w-full flex items-center justify-between">
         <h1 class="text-xl font-semibold">Upcoming Events</h1>
         <NuxtLink
@@ -146,14 +148,14 @@
         </li>
       </ul>
     </div>
-    <div class="w-full flex flex-col gap-4 px-4 py-2 mt-5">
+    <div class="w-full flex flex-col gap-4 py-2 mt-5">
       <div class="w-full flex items-center justify-between">
         <h1 class="text-xl font-semibold">Featured Events</h1>
         <NuxtLink
           to="/dashboard/events"
-          class="text-primary hover:underline flex items-center gap-2 bg-primary/15 rounded-sm px-3 py-1.5"
+          class="bg-primary text-white hover:underline flex items-center gap-2 rounded-sm px-3 py-1.5"
         >
-          <p class="text-sm font-semibold">View all events</p>
+          <p class="text-sm font-semibold text-inherit">View all</p>
           <Icon name="heroicons:arrow-right" class="text-base" />
         </NuxtLink>
       </div>

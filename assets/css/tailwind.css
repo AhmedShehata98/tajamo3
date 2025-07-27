@@ -132,25 +132,26 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+  --header-height: 70px;
 }
 
 /* app container media query */
 @media screen and (min-width: 367px) {
   :root {
     --container-width: 100%;
-    --container-padding: 4rem;
+    --container-padding: 1rem;
   }
 }
 @media screen and (min-width: 768px) {
   :root {
     --container-width: 100%;
-    --container-padding: 6rem;
+    --container-padding: 2.5rem;
   }
 }
 @media screen and (min-width: 992px) {
   :root {
     --container-width: 770px;
-    --container-padding: 2.5rem;
+    --container-padding: 3rem;
   }
 }
 @media screen and (min-width: 1024px) {
@@ -200,7 +201,7 @@
 
 @layer components {
   .app-container {
-    @apply container max-w-(--container-width) mx-auto;
+    @apply container max-w-(--container-width) px-(--container-padding) mx-auto;
   }
   .input {
     @apply text-foreground bg-gray-200 rounded-sm border focus:border-secondary px-3 py-1 focus:outline-none;

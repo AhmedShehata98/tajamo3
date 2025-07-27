@@ -13,6 +13,7 @@
           class="text-sm text-accent capitalize"
           @click="async () => await markAllAsRead()"
           :disabled="inPendingMarkAllAsRead"
+          v-if="unreadCount > 0"
         >
           <span v-if="!inPendingMarkAllAsRead" class="flex items-center gap-2">
             <p class="text-inherit font-semibold">mark all as read</p>
@@ -43,6 +44,7 @@
             type="button"
             class="flex items-center gap-2 text-sm text-red-500 capitalize rounded-md px-3 py-1 font-medium hover:bg-red-200"
             @click="async () => await clearAll()"
+            v-if="notifications.length > 0"
           >
             <p class="text-inherit">clear all</p>
             <Icon name="lucide:trash-2" class="inline-block" />
@@ -57,5 +59,6 @@
 const inPendingMarkAllAsRead = shallowRef(false);
 const inPendingClearAll = shallowRef(false);
 
-const { notifications, markAllAsRead, clearAll } = useNotifications();
+const { notifications, markAllAsRead, clearAll, unreadCount } =
+  useNotifications();
 </script>
