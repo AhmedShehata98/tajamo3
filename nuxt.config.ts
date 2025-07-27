@@ -14,6 +14,61 @@ export default defineNuxtConfig({
     "nuxt-vue3-google-signin",
   ],
   // plugins: ["~/plugins/supabase.ts"],
+  app: {
+    head: {
+      title: "Tajamu | Event & Conference Management System",
+      htmlAttrs: {
+        lang: "en",
+      },
+      meta: [
+        { charset: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        {
+          property: "description",
+          name: "description",
+          content:
+            "Tajamu is an all-in-one platform for organizing and managing events, forums, and conferences efficiently and effortlessly.",
+        },
+        { name: "format-detection", content: "telephone=no" },
+        { name: "author", content: "Ahmed shehata" },
+        {
+          name: "keywords",
+          content:
+            "Tajamu, events, conferences, forums, event management, conference system, event platform",
+        },
+        {
+          property: "og:title",
+          content: "Tajamu | Professional Event Management Platform",
+        },
+        {
+          property: "og:description",
+          content:
+            "An integrated platform for planning, managing, and hosting events and conferences online and offline.",
+        },
+        { property: "og:type", content: "website" },
+        { property: "og:image", content: "/og-image.jpg" },
+        { property: "og:url", content: "https://tajamu.ahmedshehata.online" },
+        { name: "twitter:card", content: "summary_large_image" },
+        {
+          name: "twitter:title",
+          content: "Tajamu | Smart Conference & Forum Management",
+        },
+        {
+          name: "twitter:description",
+          content:
+            "Tajamu simplifies the organization of professional events, whether virtual or in-person.",
+        },
+        { name: "twitter:image", content: "/og-image.jpg" },
+      ],
+      link: [
+        { rel: "icon", type: "image/png", href: "/favicon.png" },
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap",
+        },
+      ],
+    },
+  },
   css: ["~/assets/css/tailwind.css"],
   vite: {
     plugins: [tailwindcss()],
