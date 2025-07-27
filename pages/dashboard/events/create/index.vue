@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 w-full flex-col items-start justify-start">
+  <div class="py-4 app-container flex-col items-start justify-start">
     <span class="w-full flex flex-col items-start justify-center gap-3">
       <h3 class="font-semibold text-2xl text-start text-text-primary">
         Create New Event

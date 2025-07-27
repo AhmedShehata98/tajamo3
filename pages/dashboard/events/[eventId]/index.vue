@@ -1,6 +1,8 @@
 <template>
   <div class="w-full flex-col flex items-start justify-start">
-    <figure class="relative w-full h-72 bg-secondary/50 backdrop-blur-md">
+    <figure
+      class="relative w-full h-72 xl:h-96 bg-secondary/50 backdrop-blur-md"
+    >
       <img
         :src="eventDetails?.data?.image"
         :alt="eventDetails?.data?.name"
@@ -9,55 +11,59 @@
       <div
         class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/90 rounded-t-sm flex items-end justify-between justify-end max-md:flex-col max-md:items-center max-md:justify-end p-4"
       >
-        <div
-          class="max-md:w-full flex flex-col items-start space-y-6 md:flex-1"
-        >
-          <span
-            v-if="eventDetails?.data?.event_type"
-            :class="eventTypeBackgroundFactory(eventDetails?.data?.event_type)"
-            class="px-3 py-1 rounded-full text-white text-xs font-medium mb-3"
+        <div class="app-container flex item-center justify-between">
+          <div
+            class="max-md:w-full flex flex-col items-start space-y-6 md:flex-1"
           >
-            {{ eventDetails?.data?.event_type }}
-          </span>
-          <h3 class="text-white md:text-2xl font-bold mb-3">
-            {{ eventDetails?.data?.name }}
-          </h3>
-        </div>
-        <div
-          v-if="status === 'success'"
-          class="max-md:w-full flex items-center justify-start gap-2"
-        >
-          <UiButton type="button" variant="outline">
-            <Icon name="mdi:share" class="w-4 h-4" />
-            <p class="text-sm font-medium">Share</p>
-          </UiButton>
-          <EventsChooseTicketWrapper
-            v-if="
-              !eventDetails?.data?.is_registered &&
-              eventDetails?.data.created_by !== userStore?.id
-            "
-            :ticketTypes="ticketTypes?.data || []"
-            ref="ticketModal"
-            @buy="handleBuyTicket"
-            @select="handleSelectTicket"
+            <span
+              v-if="eventDetails?.data?.event_type"
+              :class="
+                eventTypeBackgroundFactory(eventDetails?.data?.event_type)
+              "
+              class="px-3 py-1 rounded-full text-white text-xs font-medium mb-3"
+            >
+              {{ eventDetails?.data?.event_type }}
+            </span>
+            <h3 class="text-white md:text-2xl font-bold mb-3">
+              {{ eventDetails?.data?.name }}
+            </h3>
+          </div>
+          <div
+            v-if="status === 'success'"
+            class="max-md:w-full flex items-center justify-start gap-2"
           >
-            <template #trigger>
-              <UiButton type="button"> enroll now </UiButton>
-            </template>
-          </EventsChooseTicketWrapper>
-          <button
-            v-if="success || eventDetails?.data?.is_registered"
-            type="button"
-            disabled
-            class="flex items-center justify-start gap-2 bg-primary/20 text-gray-400 px-3 py-2 rounded-lg cursor-not-allowed"
-          >
-            <Icon name="mdi:check" class="w-4 h-4" />
-            <p class="text-inherit text-sm font-medium">enrolled</p>
-          </button>
+            <UiButton type="button" variant="outline">
+              <Icon name="mdi:share" class="w-4 h-4" />
+              <p class="text-sm font-medium">Share</p>
+            </UiButton>
+            <EventsChooseTicketWrapper
+              v-if="
+                !eventDetails?.data?.is_registered &&
+                eventDetails?.data.created_by !== userStore?.id
+              "
+              :ticketTypes="ticketTypes?.data || []"
+              ref="ticketModal"
+              @buy="handleBuyTicket"
+              @select="handleSelectTicket"
+            >
+              <template #trigger>
+                <UiButton type="button"> enroll now </UiButton>
+              </template>
+            </EventsChooseTicketWrapper>
+            <button
+              v-if="success || eventDetails?.data?.is_registered"
+              type="button"
+              disabled
+              class="flex items-center justify-start gap-2 bg-primary/20 text-gray-400 px-3 py-2 rounded-lg cursor-not-allowed"
+            >
+              <Icon name="mdi:check" class="w-4 h-4" />
+              <p class="text-inherit text-sm font-medium">enrolled</p>
+            </button>
+          </div>
         </div>
       </div>
     </figure>
-    <div class="w-full flex items-center justify-between gap-4 p-4">
+    <div class="app-container flex items-center justify-between gap-4 py-4">
       <ul
         class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-start gap-5"
       >
@@ -110,7 +116,7 @@
       </ul>
     </div>
     <div
-      class="w-full flex items-start justify-start max-md:flex-col gap-4 py-2 px-4"
+      class="app-container flex items-start justify-start max-md:flex-col gap-4 py-2"
     >
       <ul
         class="w-full md:w-1/2 lg:w-[60%] flex items-center flex-col justify-start gap-4"
