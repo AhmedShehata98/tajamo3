@@ -1,4 +1,5 @@
 import tailwindcss from "@tailwindcss/vite";
+import path from "node:path";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -7,8 +8,7 @@ export default defineNuxtConfig({
   modules: [
     "@nuxt/fonts",
     "@nuxt/icon",
-    // Temporarily disable @nuxt/image to fix initialization error
-    // "@nuxt/image",
+    "@nuxt/image",
     "shadcn-nuxt",
     "@nuxtjs/leaflet",
     "nuxt-vue3-google-signin",
@@ -54,7 +54,7 @@ export default defineNuxtConfig({
      * Directory that the component lives in.
      * @default "./components/ui"
      */
-    componentDir: "~/components/ui",
+    componentDir: path.resolve("~/components/ui"),
   },
 
   routeRules: {

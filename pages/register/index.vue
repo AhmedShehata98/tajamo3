@@ -197,7 +197,7 @@
               <div
                 class="w-full grid grid-cols-6 gap-2 bg-zinc-50 p-2 rounded-lg"
               >
-                <UiOtp
+                <otp
                   v-model="form.otp"
                   :otp-length="otpLength"
                   :verify-status="otpVerifyStatus"
@@ -278,6 +278,7 @@ import {
 import { AuthOtpFactory } from "~/services/auth/auth.factory";
 import type { SignupState } from "~/services/auth/auth.state";
 import type { UserForm } from "~/types/users";
+import otp from "~/components/ui/otp/index.vue";
 
 const router = useRouter();
 const isSendOtpCode = ref(false);
