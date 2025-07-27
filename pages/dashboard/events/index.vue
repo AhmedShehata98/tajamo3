@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex-col flex items-start justify-start p-4">
+  <div class="app-container flex-col flex items-start justify-start p-4">
     <div class="w-full flex items-center justify-between">
       <span>
         <h1 class="text-2xl font-bold text-text-primary">Events</h1>
@@ -9,7 +9,7 @@
       </span>
       <NuxtLink
         to="/dashboard/events/create"
-        class="bg-accent px-4 py-2 rounded-sm flex items-center gap-2 backdrop-blur-md hover:bg-primary/80 transition-all duration-300"
+        class="bg-primary px-4 py-2 rounded-sm flex items-center gap-2 backdrop-blur-md hover:bg-primary/80 transition-all duration-300"
       >
         <Icon name="mdi:plus" class="text-xl text-white" />
         <p class="text-white font-medium text-sm">Create Event</p>

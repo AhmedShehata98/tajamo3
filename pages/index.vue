@@ -1,12 +1,15 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-[#EAEFEF]">
+  <div
+    class="min-h-screen flex items-center justify-center bg-[#EAEFEF] bg-cover bg-center no-repeat"
+    style="background-image: url('/images/auth.webp')"
+  >
     <!-- Right Side: Login Form -->
     <div
       class="flex flex-col justify-center items-center w-full rounded-md md:w-fit bg-white p-8 md:p-14 shadow-md"
     >
       <div class="w-full max-w-sm">
         <div class="mb-8 text-center">
-          <h1 class="font-logo text-accent text-3xl mb-5">Tajammoa</h1>
+          <h1 class="font-logo text-primary text-3xl mb-5">Tajammoa</h1>
           <h2 class="text-xl font-semibold text-gray-800 mb-1">
             Welcome to event management platform
           </h2>
@@ -62,13 +65,13 @@
             <span class="flex items-center justify-between mt-4">
               <button
                 type="button"
-                class="p-2 flex items-center justify-center gap-2 rounded-lg text-accent capitalize text-sm hover:bg-accent/15 hover:text-accent transition-all duration-200"
+                class="p-2 flex items-center justify-center gap-2 rounded-lg text-primary capitalize text-sm hover:bg-primary/15 hover:text-primary transition-all duration-200"
               >
                 send to email
               </button>
               <button
                 type="button"
-                class="p-2 flex items-center justify-center gap-2 rounded-lg text-accent capitalize text-sm hover:bg-accent/15 hover:text-accent transition-all duration-200"
+                class="p-2 flex items-center justify-center gap-2 rounded-lg text-primary capitalize text-sm hover:bg-primary/15 hover:text-primary transition-all duration-200"
                 :disabled="counterRunning || isPending"
                 @click="handleResend"
                 v-if="!counterRunning"
@@ -99,9 +102,9 @@
             />
             Sign in with Google
           </button>
-          <div class="text-center mt-4 text-sm text-gray-500">
+          <div class="text-center mt-4 text-sm text-gray-500 font-medium">
             New user?
-            <NuxtLink to="/register" class="text-accent hover:underline"
+            <NuxtLink to="/register" class="text-primary hover:underline"
               >Create Account</NuxtLink
             >
           </div>

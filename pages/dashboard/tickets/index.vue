@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative w-full max-w-full flex-col flex items-start justify-start p-4 space-y-6"
+    class="relative app-container flex-col flex items-start justify-start p-4 space-y-6"
   >
     <div class="w-full flex justify-between items-center">
       <h1 class="text-2xl font-bold text-text-primary">Tickets</h1>

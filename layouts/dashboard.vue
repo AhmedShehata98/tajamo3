@@ -1,18 +1,10 @@
 <template>
-  <main
-    class="relative flex items-start min-h-screen justify-start divide-x bg-fixed bg-cover bg-center"
-  >
-    <UiDashboardSidebar
+  <main class="relative min-h-screen flex items-start justify-start flex-col">
+    <UiDashboardHeader
       :is-open-sidebar="isOpenSidebar"
       @toggle-sidebar="() => (isOpenSidebar = !isOpenSidebar)"
     />
-    <section class="flex flex-col flex-1 h-full isolate bg-background">
-      <UiDashboardHeader
-        :is-open-sidebar="isOpenSidebar"
-        @toggle-sidebar="() => (isOpenSidebar = !isOpenSidebar)"
-      />
-      <slot />
-    </section>
+    <slot />
   </main>
 </template>
 <script setup lang="ts">

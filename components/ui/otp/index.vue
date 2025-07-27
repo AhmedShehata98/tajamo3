@@ -52,8 +52,10 @@ const handleOtpInput = (event: Event, index: number) => {
   }
 };
 const handleOtpKeydown = async (event: KeyboardEvent, index: number) => {
-  const keyCode = event.code.toLowerCase();
-  if (keyCode === "KeyV" && event.ctrlKey) {
+  const eventKey = event.key;
+  let currentIndex = index;
+
+  if ((event.ctrlKey || event.metaKey) && eventKey.toLowerCase() === "v") {
     event.preventDefault();
     const pin = await getOtpFromClipboard(event);
     otpValue.value = pin;
@@ -61,6 +63,11 @@ const handleOtpKeydown = async (event: KeyboardEvent, index: number) => {
     otpInputs.value[index - 1]?.focus();
   } else if (event.key === "ArrowRight" && index < props.otpLength - 1) {
     otpInputs.value[index + 1]?.focus();
+  } else if (eventKey === "Backspace" && currentIndex > -1) {
+    otpValue.value[currentIndex] = "";
+    currentIndex = currentIndex - 1;
+    otpInputs.value[currentIndex]?.focus();
+    otpValue.value[currentIndex] = "";
   }
 };
 </script>

@@ -49,7 +49,7 @@
             v-if="success || eventDetails?.data?.is_registered"
             type="button"
             disabled
-            class="flex items-center justify-start gap-2 bg-accent/20 text-gray-400 px-3 py-2 rounded-lg cursor-not-allowed"
+            class="flex items-center justify-start gap-2 bg-primary/20 text-gray-400 px-3 py-2 rounded-lg cursor-not-allowed"
           >
             <Icon name="mdi:check" class="w-4 h-4" />
             <p class="text-inherit text-sm font-medium">enrolled</p>
@@ -64,7 +64,7 @@
         <li
           class="flex items-center justify-start gap-2 bg-card px-3 py-2 rounded-lg max-w-full"
         >
-          <Icon name="mdi:calendar" class="text-2xl text-accent shrink-0" />
+          <Icon name="mdi:calendar" class="text-2xl text-primary shrink-0" />
           <p
             class="text-xs font-semibold capitalize text-text-secondary max-w-full overflow-hidden text-ellipsis"
           >
@@ -77,7 +77,7 @@
         >
           <Icon
             name="mdi:calendar-range"
-            class="text-2xl text-accent shrink-0"
+            class="text-2xl text-primary shrink-0"
           />
           <p
             class="text-xs font-semibold capitalize text-text-secondary max-w-full overflow-hidden text-ellipsis"
@@ -90,7 +90,7 @@
           v-if="eventDetails?.data?.location_type === LocationType.OFFLINE"
           class="flex items-center justify-start gap-2 bg-card px-3 py-2 rounded-lg max-w-full"
         >
-          <Icon name="mdi:location" class="text-2xl text-accent shrink-0" />
+          <Icon name="mdi:location" class="text-2xl text-primary shrink-0" />
           <p
             class="text-xs font-semibold capitalize text-center text-text-secondary max-w-full overflow-hidden text-ellipsis"
           >
@@ -100,7 +100,7 @@
         <li
           class="flex items-center justify-start gap-2 bg-card px-3 py-2 rounded-lg max-w-full"
         >
-          <Icon name="mdi:users" class="text-2xl text-accent shrink-0" />
+          <Icon name="mdi:users" class="text-2xl text-primary shrink-0" />
           <p
             class="text-xs font-semibold capitalize text-center text-text-secondary max-w-full overflow-hidden text-ellipsis"
           >
@@ -163,16 +163,16 @@
             this event is online, you can join it using the link below
           </p>
           <div
-            class="w-full h-48 flex items-center justify-center flex-col bg-accent/10 backdrop-blur-md rounded-sm text-center p-4"
+            class="w-full h-48 flex items-center justify-center flex-col bg-primary/10 backdrop-blur-md rounded-sm text-center p-4"
           >
             <span
-              class="flex items-center justify-center bg-accent/40 w-fit p-4 rounded-full aspect-square m-auto"
+              class="flex items-center justify-center bg-primary/40 w-fit p-4 rounded-full aspect-square m-auto"
             >
-              <Icon name="mdi:link" class="text-4xl text-accent" />
+              <Icon name="mdi:link" class="text-4xl text-primary" />
             </span>
             <nuxt-link
               :href="eventDetails?.data?.invitation_url"
-              class="flex items-center justify-center gap-2 text-sm font-medium text-accent mt-4 bg-accent/20 p-2 rounded-sm"
+              class="flex items-center justify-center gap-2 text-sm font-medium text-primary mt-4 bg-primary/20 p-2 rounded-sm"
             >
               <p>
                 {{ eventDetails?.data?.invitation_url }}

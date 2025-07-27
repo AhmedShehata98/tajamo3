@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-4 p-4">
+  <div class="app-container flex flex-col gap-4 p-4">
     <h1 class="text-2xl font-bold text-text-primary">Payments</h1>
     <div
       class="w-fit max-md:w-full flex items-start justify-start gap-4 p-2 glass-card"

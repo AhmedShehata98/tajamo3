@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 w-full flex-col items-start justify-start">
+  <div class="app-container p-4 flex-col items-start justify-start">
     <div class="w-full flex items-start justify-between gap-3">
       <span class="w-full flex flex-col items-start justify-center gap-3">
         <h3 class="font-semibold text-2xl text-start text-text-primary">

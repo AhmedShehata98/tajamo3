@@ -1,40 +1,43 @@
 <template>
-  <div class="w-full flex flex-col">
+  <div class="app-container flex flex-col">
     <div class="w-full flex items-start justify-start p-4">
       <ul class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
         <li class="glass-card">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold leading-tight">Total Events</h3>
-            <Icon name="heroicons:calendar" class="text-2xl text-accent" />
+            <Icon name="heroicons:calendar" class="text-2xl text-primary" />
           </div>
-          <h2 class="text-3xl font-bold mt-2">156</h2>
+          <h2 class="text-3xl font-bold mt-2 text-primary">156</h2>
           <p class="text-sm secondary-text">+12% from last month</p>
         </li>
 
         <li class="glass-card">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold leading-tight">Upcoming Events</h3>
-            <Icon name="heroicons:calendar-days" class="text-2xl text-accent" />
+            <Icon
+              name="heroicons:calendar-days"
+              class="text-2xl text-primary"
+            />
           </div>
-          <h2 class="text-3xl font-bold mt-2">23</h2>
+          <h2 class="text-3xl font-bold mt-2 text-primary">23</h2>
           <p class="text-sm secondary-text">Next 30 days</p>
         </li>
 
         <li class="glass-card">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold">Total Attendees</h3>
-            <Icon name="heroicons:users" class="text-2xl text-accent" />
+            <Icon name="heroicons:users" class="text-2xl text-primary" />
           </div>
-          <h2 class="text-3xl font-bold mt-2">1,234</h2>
+          <h2 class="text-3xl font-bold mt-2 text-primary">1,234</h2>
           <p class="text-sm secondary-text">+25% from last month</p>
         </li>
 
         <li class="glass-card">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold leading-tight">Team Members</h3>
-            <Icon name="heroicons:user-group" class="text-2xl text-accent" />
+            <Icon name="heroicons:user-group" class="text-2xl text-primary" />
           </div>
-          <h2 class="text-3xl font-bold mt-2">48</h2>
+          <h2 class="text-3xl font-bold mt-2 text-primary">48</h2>
           <p class="text-sm secondary-text">Active members</p>
         </li>
       </ul>
@@ -44,9 +47,9 @@
         <h1 class="text-xl font-semibold">Upcoming Events</h1>
         <NuxtLink
           to="/dashboard/events"
-          class="text-accent hover:underline flex items-center gap-2 bg-accent/15 rounded-sm px-3 py-1.5"
+          class="text-white hover:underline flex items-center gap-2 bg-primary rounded-sm px-3 py-1.5"
         >
-          <p class="text-sm font-semibold">View all</p>
+          <p class="text-sm text-white font-semibold">View all</p>
           <Icon name="heroicons:arrow-right" class="text-base" />
         </NuxtLink>
       </div>
@@ -57,7 +60,7 @@
             <div class="flex items-start gap-4">
               <div class="flex flex-col items-center">
                 <h3 class="text-lg font-semibold">May</h3>
-                <h2 class="text-2xl font-bold">25</h2>
+                <h2 class="text-3xl font-bold text-primary">25</h2>
                 <p class="text-sm">2023</p>
               </div>
 
@@ -75,7 +78,7 @@
             </div>
 
             <button
-              class="px-4 py-2 text-slate-600 text-sm bg-accent/20 font-semibold hover:bg-accent/90 hover:text-slate-100 rounded-sm"
+              class="px-4 py-2 text-purple-800 text-sm bg-purple-200 font-semibold hover:bg-purple-300 hover:text-purple-900 rounded-sm"
             >
               View Details
             </button>
@@ -87,7 +90,7 @@
             <div class="flex items-start gap-4">
               <div class="flex flex-col items-center">
                 <h3 class="text-lg font-semibold">May</h3>
-                <h2 class="text-2xl font-bold">20</h2>
+                <h2 class="text-3xl font-bold text-primary">20</h2>
                 <p class="text-sm">2023</p>
               </div>
 
@@ -105,7 +108,7 @@
             </div>
 
             <button
-              class="px-4 py-2 text-slate-600 text-sm bg-accent/20 font-semibold hover:bg-accent/90 hover:text-slate-100 rounded-sm"
+              class="px-4 py-2 text-purple-800 text-sm bg-purple-200 font-semibold hover:bg-purple-300 hover:text-purple-900 rounded-sm"
             >
               View Details
             </button>
@@ -117,7 +120,7 @@
             <div class="flex items-start gap-4">
               <div class="flex flex-col items-center">
                 <h3 class="text-lg font-semibold">June</h3>
-                <h2 class="text-2xl font-bold">5</h2>
+                <h2 class="text-3xl font-bold text-primary">5</h2>
                 <p class="text-sm">2023</p>
               </div>
 
@@ -135,7 +138,7 @@
             </div>
 
             <button
-              class="px-4 py-2 text-slate-600 text-sm bg-accent/20 font-semibold hover:bg-accent/90 hover:text-slate-100 rounded-sm"
+              class="px-4 py-2 text-purple-800 text-sm bg-purple-200 font-semibold hover:bg-purple-300 hover:text-purple-900 rounded-sm"
             >
               View Details
             </button>
@@ -148,7 +151,7 @@
         <h1 class="text-xl font-semibold">Featured Events</h1>
         <NuxtLink
           to="/dashboard/events"
-          class="text-accent hover:underline flex items-center gap-2 bg-accent/15 rounded-sm px-3 py-1.5"
+          class="text-primary hover:underline flex items-center gap-2 bg-primary/15 rounded-sm px-3 py-1.5"
         >
           <p class="text-sm font-semibold">View all events</p>
           <Icon name="heroicons:arrow-right" class="text-base" />
@@ -156,7 +159,7 @@
       </div>
       <ul
         v-if="events?.data"
-        class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+        class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-6 gap-4"
       >
         <EventsEventCard
           v-for="event in events?.data"

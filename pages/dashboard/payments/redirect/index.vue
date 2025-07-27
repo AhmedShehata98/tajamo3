@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center justify-center h-screen">
+  <div class="app-container flex flex-col items-center justify-center h-screen">
     <div
       v-if="
         route.query && route.query.success?.toString()?.toLowerCase() === 'true'

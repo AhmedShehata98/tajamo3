@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-full min-h-screen p-5">
+  <div class="app-container flex flex-col w-full min-h-screen p-5">
     <div class="flex items-start justify-between flex-col mb-4">
       <h1 class="text-2xl font-bold text-text-primary">Orders</h1>
       <p class="text-text-secondary">

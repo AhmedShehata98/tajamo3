@@ -61,7 +61,7 @@ import "vue-sonner/style.css";
 
 .fade-slide-leave-to {
   opacity: 0;
-  transform: translateX(10px);
+  transform: translateY(10px);
 }
 
 /* Page */
@@ -73,13 +73,13 @@ import "vue-sonner/style.css";
 
 .page-enter-from,
 .page-leave-to {
-  transform: translateX(-10px);
+  transform: translateY(-10px);
   opacity: 0;
 }
 
 .page-enter-to,
 .page-leave-from {
-  transform: translateX(0);
+  transform: translateY(0);
   opacity: 1;
 }
 /* .page-enter-active,

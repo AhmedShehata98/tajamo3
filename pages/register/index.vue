@@ -1,5 +1,8 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-[#EAEFEF]">
+  <div
+    class="min-h-screen flex items-center justify-center bg-[#EAEFEF] bg-cover bg-center no-repeat"
+    style="background-image: url('/images/auth.webp')"
+  >
     <!-- Right Side: Register Form -->
     <div
       class="flex flex-col justify-center items-center w-full md:w-fit rounded-md bg-white p-8 md:p-14 shadow-md"
@@ -17,7 +20,7 @@
               class="text-2xl text-gray-500 hover:text-gray-700 transition-colors duration-200"
             />
           </button>
-          <h1 class="font-logo text-accent text-3xl mb-5">Tajammoa</h1>
+          <h1 class="font-logo text-primary text-3xl mb-5">Tajammoa</h1>
           <h2 class="text-xl font-semibold text-gray-800 mb-1">
             Create New Account
           </h2>
@@ -206,14 +209,14 @@
               <span class="w-full flex justify-between items-center gap-4 mt-5">
                 <button
                   type="button"
-                  class="text-sm font-semibold text-accent capitalize underline"
+                  class="text-sm font-semibold text-primary capitalize underline"
                   :disabled="isSendOtpCode || isPending"
                 >
                   <p>send to email</p>
                 </button>
                 <button
                   type="button"
-                  class="text-sm font-semibold text-accent underline"
+                  class="text-sm font-semibold text-primary underline"
                   :disabled="isRunning || isPending"
                   @click="handleSendOtp"
                 >
@@ -233,7 +236,6 @@
           <button
             type="button"
             class="w-full flex items-center justify-center gap-2 py-3 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium transition-all duration-200"
-            @click="signIn('google')"
           >
             <img
               src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -245,7 +247,6 @@
           <button
             type="button"
             class="w-full flex items-center justify-center gap-2 py-3 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium transition-all duration-200"
-            @click="signIn('github')"
           >
             <img
               src="https://www.svgrepo.com/show/448447/github.svg"
@@ -256,7 +257,7 @@
           </button>
           <div class="text-center mt-4 text-sm text-gray-500">
             Already have an account?
-            <NuxtLink to="/" class="text-accent hover:underline"
+            <NuxtLink to="/" class="text-primary hover:underline"
               >Login</NuxtLink
             >
           </div>
@@ -283,7 +284,6 @@ import otp from "~/components/ui/otp/index.vue";
 const router = useRouter();
 const isSendOtpCode = ref(false);
 const isPending = ref(false);
-const { signIn } = useAuth();
 
 const {
   start: startCountdown,

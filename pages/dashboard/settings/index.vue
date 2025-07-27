@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 w-full flex-col items-start justify-start">
+  <div class="app-container p-4 flex-col items-start justify-start">
     <span class="w-full flex flex-col items-start justify-center gap-3">
       <h3 class="font-semibold text-2xl text-start text-text-primary">
         Settings
@@ -16,8 +16,8 @@
           type="button"
           :class="
             activeTab === 'profile'
-              ? 'bg-accent text-white font-semibold '
-              : 'bg-primary text-text-primary'
+              ? 'bg-primary text-white font-semibold '
+              : 'bg-purple-200 text-purple-800'
           "
           class="rounded-md px-4 p-2 transition-all duration-300 uppercase"
           @click="activeTab = 'profile'"
@@ -30,8 +30,8 @@
           type="button"
           :class="
             activeTab === 'security'
-              ? 'bg-accent text-white font-semibold '
-              : 'bg-primary text-text-primary'
+              ? 'bg-primary text-white font-semibold '
+              : 'bg-purple-200 text-purple-800'
           "
           class="rounded-md px-4 p-2 transition-all duration-300 uppercase font-medium"
           @click="activeTab = 'security'"
@@ -44,8 +44,8 @@
           type="button"
           :class="
             activeTab === 'notifications'
-              ? 'bg-accent text-white font-semibold '
-              : 'bg-primary text-text-primary'
+              ? 'bg-primary text-white font-semibold '
+              : 'bg-purple-200 text-purple-800'
           "
           class="rounded-md px-4 p-2 transition-all duration-300 uppercase font-medium"
           @click="activeTab = 'notifications'"
@@ -56,7 +56,7 @@
     </ul>
     <div
       v-if="activeTab === 'profile'"
-      class="w-full flex flex-col p-3 bg-card backdrop-blur-md items-start justify-center gap-2 rounded-sm mt-5"
+      class="w-full flex flex-col p-3 bg-card backdrop-blur-md items-start justify-center gap-2 bg-gray-100 rounded-sm mt-5"
     >
       <span class="w-full flex flex-col items-start justify-center gap-3">
         <h3 class="font-semibold text-2xl text-start text-text-primary">
@@ -146,7 +146,7 @@
     </div>
     <div
       v-if="activeTab === 'notifications'"
-      class="w-full flex flex-col p-3 bg-zinc-200/80 backdrop-blur-md items-start justify-center gap-2 rounded-sm mt-5"
+      class="w-full flex flex-col p-3 bg-gray-100 backdrop-blur-md items-start justify-center gap-2 rounded-sm mt-5"
     >
       <span class="w-full flex flex-col items-start justify-center gap-3">
         <h3 class="font-semibold text-2xl text-start text-text-primary">
