@@ -108,8 +108,8 @@
                 >
                 <UiPhoneInput
                   placeholder="Enter your phone number"
-                  @blur:phone-number="phoneNumberAttrs.onBlur()"
-                  @blur:country-code="countryCodeAttrs.onBlur()"
+                  @blur:phone-number="()=>phoneNumberAttrs.onBlur()"
+                  @blur:country-code="()=>countryCodeAttrs.onBlur()"
                   v-model:country-code="countryCode!"
                   v-model:phone-number="phoneNumber!"
                   :error="phoneNumberAttrs.phoneNumberError"
