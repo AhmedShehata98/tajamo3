@@ -1,33 +1,35 @@
 <template>
   <li
-    class="w-full flex flex-col justify-start glass-card group overflow-hidden hover:scale-102 hover:translate-y-[-5px] transition-all duration-300"
+    class="w-full flex flex-col justify-start glass-card p-0 group overflow-hidden hover:scale-102 hover:translate-y-[-5px] transition-all duration-300"
   >
-    <figure class="relative h-[225px] rounded-lg overflow-hidden">
+    <figure class="relative h-[225px]">
       <nuxt-img
         :src="event.image"
         alt="Event Image"
         width="678"
         height="320"
+        format="webp"
         loading="lazy"
-        class="w-full h-full object-cover rounded-t-sm rounded-lg"
+        quality="678"
+        class="w-full h-full object-cover rounded-t-sm"
       />
       <div
-        class="group-hover:opacity-100 opacity-0 absolute inset-0 flex items-center justify-center p-8 rounded-lg bg-secondary/10 backdrop-blur-sm transition-all duration-300"
+        class="group-hover:opacity-100 opacity-0 absolute inset-0 flex items-center justify-center p-8 bg-secondary/10 backdrop-blur-sm transition-all duration-300"
       >
         <NuxtLink
           :to="`/dashboard/events/${event.id}`"
           class="flex flex-col text-sm px-4.5 py-2 font-bold text-black flex items-center gap-2 p-4 transition-all duration-300"
         >
-          <p class="text-sm font-bold text-white">View Details</p>
+          <p class="text-sm font-bold text-black">View Details</p>
           <span
-            class="flex items-center justify-center bg-primary text-white backdrop-blur-sm rounded-full min-w-12 min-h-12"
+            class="flex items-center justify-center bg-accent/50 backdrop-blur-sm rounded-full min-w-12 min-h-12"
           >
             <Icon name="mdi:arrow-right" class="text-xl" />
           </span>
         </NuxtLink>
       </div>
     </figure>
-    <div class="flex items-start flex-col justify-start gap-2 mt-1.5">
+    <div class="flex items-start flex-col p-4 justify-start gap-2 mt-1.5">
       <span
         class="text-sm bg-event-color-food rounded-md p-1 px-2.5 mt-2"
         :class="eventTypeBackgroundFactory(event.event_type)"
@@ -47,9 +49,9 @@
           class="text-sm flex items-center justify-start align-start gap-2 overflow-hidden font-semibold"
         >
           <span
-            class="flex items-center justify-center self-start bg-primary/20 rounded-full min-w-7 min-h-7"
+            class="flex items-center justify-center self-start bg-accent/20 rounded-full min-w-7 min-h-7"
           >
-            <Icon name="mdi:location" class="text-xl text-primary" />
+            <Icon name="mdi:location" class="text-xl text-accent" />
           </span>
           <p class="text-inherit text-start">
             {{
@@ -63,9 +65,9 @@
           class="text-sm flex items-center justify-start gap-2 overflow-hidden font-semibold"
         >
           <span
-            class="flex items-center justify-center bg-primary/20 rounded-full min-w-7 min-h-7"
+            class="flex items-center justify-center bg-accent/20 rounded-full min-w-7 min-h-7"
           >
-            <Icon name="mdi:calendar" class="text-xl text-primary" />
+            <Icon name="mdi:calendar" class="text-xl text-accent" />
           </span>
           <p class="text-inherit text-start">
             {{ dateFormatter(event.start_at) }}
@@ -75,9 +77,9 @@
           class="text-sm flex items-center justify-start gap-2 overflow-hidden mt-1.5 font-semibold"
         >
           <span
-            class="flex items-center justify-center bg-primary/20 rounded-full min-w-7 min-h-7"
+            class="flex items-center justify-center bg-accent/20 rounded-full min-w-7 min-h-7"
           >
-            <Icon name="mdi:user" class="text-xl text-primary" />
+            <Icon name="mdi:user" class="text-xl text-accent" />
           </span>
           <p class="text-inherit text-start">{{ event.capacity }} Attendees</p>
         </li>

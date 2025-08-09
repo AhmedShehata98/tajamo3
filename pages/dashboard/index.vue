@@ -200,5 +200,6 @@ definePageMeta({
     mode: "out-in",
   },
   layout: "dashboard",
+  middleware: "auth",
 });
 </script>

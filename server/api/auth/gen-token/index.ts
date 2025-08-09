@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import { ResponseSchema } from "~/server/utils/response-schema";
-import type { TokenPayload } from "~/types/tokens";
 
 export default defineEventHandler(async (event) => {
   try {
@@ -14,17 +13,29 @@ export default defineEventHandler(async (event) => {
 
     if (event.method === "POST") {
       const body = await readBody<{
-        id: string;
+        contact_source: string;
       }>(event);
-      const token = jwt.sign({ id: body.id }, jwtSecret as string, {
-        expiresIn: "8h",
-      });
+      console.log("==========================");
+      console.log("body:", body);
 
+      const user = await users.getUserByContactSource(body.contact_source);
+      console.log("user", user);
+      if (user === null) {
+        throw createError({
+          statusCode: 404,
+          statusMessage: "User not found",
+        });
+      }
+
+      const token = jwt.sign({ id: user.id }, jwtSecret as string, {
+        expiresIn: "24h",
+      });
+      console.log("token:", token);
       setCookie(event, "token", token, {
         httpOnly: true,
         secure: true,
         sameSite: "strict",
-        maxAge: 8 * 60 * 60,
+        maxAge: 24 * 60 * 60,
       });
 
       return new ResponseSchema(token, true, "Token created successfully");
@@ -34,6 +45,8 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Method not allowed",
     });
   } catch (error) {
+    console.log(error);
+    console.log("========================");
     return createError({
       statusCode: 500,
       statusMessage:

@@ -1,39 +1,50 @@
-import { QUERY_KEYS } from "~/constants/query-keys";
-import type { ResponseSchema } from "~/server/utils/response-schema";
-import type { TokenPayload } from "~/types/tokens";
+import { getUserState, setUserState } from "~/stores/user";
+import type { ResponseSchemaType } from "~/types/backend-response";
+import type { User } from "~/types/users";
 
 const publicRoutes = ["/", "/register", "/login"];
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const controller = new AbortController();
+  const clientCookies = useCookie("token");
+  const userData = getUserState();
+
+  if (userData && Object.keys(userData).length) {
+    return;
+  }
+
+  if (publicRoutes.includes(to.path)) {
+    return;
+  }
+
+  if (!clientCookies.value) {
+    return abortNavigation();
+  }
+
   try {
-    if (publicRoutes.includes(to.path)) {
-      return;
+    const { data, execute } = await useFetch<ResponseSchemaType<User>>(
+      "/api/users/me",
+      {
+        method: "GET",
+        signal: controller.signal,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${clientCookies.value}`,
+        },
+        lazy: true,
+        immediate: false,
+      }
+    );
+    if (!publicRoutes.includes(to.path) || !userData) {
+      await execute();
     }
 
-    const cookies = useRequestHeader("cookie");
-    const token = cookies
-      ?.split(";")
-      .find((cookie) => cookie.includes("token"))
-      ?.split("=");
-
-    const { data: verifiedToken, status } = await useFetch<
-      ResponseSchema<TokenPayload>
-    >("/api/auth/verify-token", {
-      key: QUERY_KEYS.VERIFIED_TOKEN,
-      signal: controller.signal,
-    });
-    if (status.value === "error" || !verifiedToken.value?.data) {
+    if (data.value) {
+      setUserState(data.value.data);
       controller.abort();
-      return navigateTo("/");
-    }
-    if (verifiedToken.value?.data && publicRoutes.includes(to.path)) {
-      controller.abort();
-      return navigateTo("/dashboard");
     }
   } catch (error) {
     console.error("Error !!, Auth middleware: ", error);
     controller.abort();
-    return navigateTo("/");
   }
 });

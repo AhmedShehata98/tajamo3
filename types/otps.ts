@@ -1,9 +1,7 @@
 export type Otp = {
   id: number;
-  phone: string;
-  email: string;
+  contact_source: string;
   expires_at: string;
   created_at: string;
   code: string;
-  is_used: boolean;
 };

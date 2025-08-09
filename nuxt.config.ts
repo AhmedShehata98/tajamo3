@@ -1,5 +1,4 @@
 import tailwindcss from "@tailwindcss/vite";
-import path from "node:path";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -12,63 +11,9 @@ export default defineNuxtConfig({
     "shadcn-nuxt",
     "@nuxtjs/leaflet",
     "nuxt-vue3-google-signin",
+    // "@sidebase/nuxt-auth",
   ],
   // plugins: ["~/plugins/supabase.ts"],
-  app: {
-    head: {
-      title: "Tajamu | Event & Conference Management System",
-      htmlAttrs: {
-        lang: "en",
-      },
-      meta: [
-        { charset: "utf-8" },
-        { name: "viewport", content: "width=device-width, initial-scale=1" },
-        {
-          property: "description",
-          name: "description",
-          content:
-            "Tajamu is an all-in-one platform for organizing and managing events, forums, and conferences efficiently and effortlessly.",
-        },
-        { name: "format-detection", content: "telephone=no" },
-        { name: "author", content: "Ahmed shehata" },
-        {
-          name: "keywords",
-          content:
-            "Tajamu, events, conferences, forums, event management, conference system, event platform",
-        },
-        {
-          property: "og:title",
-          content: "Tajamu | Professional Event Management Platform",
-        },
-        {
-          property: "og:description",
-          content:
-            "An integrated platform for planning, managing, and hosting events and conferences online and offline.",
-        },
-        { property: "og:type", content: "website" },
-        { property: "og:image", content: "/og-image.jpg" },
-        { property: "og:url", content: "https://tajamu.ahmedshehata.online" },
-        { name: "twitter:card", content: "summary_large_image" },
-        {
-          name: "twitter:title",
-          content: "Tajamu | Smart Conference & Forum Management",
-        },
-        {
-          name: "twitter:description",
-          content:
-            "Tajamu simplifies the organization of professional events, whether virtual or in-person.",
-        },
-        { name: "twitter:image", content: "/og-image.jpg" },
-      ],
-      link: [
-        { rel: "icon", type: "image/png", href: "/favicon.png" },
-        {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap",
-        },
-      ],
-    },
-  },
   css: ["~/assets/css/tailwind.css"],
   vite: {
     plugins: [tailwindcss()],
@@ -79,13 +24,32 @@ export default defineNuxtConfig({
   googleSignIn: {
     clientId: process.env.GOOGLE_CLIENT_ID,
   },
+  // auth: {
+  //   isEnabled: true,
+  //   disableServerSideAuth: false,
+  //   originEnvKey: "http://localhost:3000",
+  //   baseURL: "http://localhost:3000/",
+  //   provider: {
+  //     type: "authjs",
+  //     trustHost: true,
+  //     defaultProvider: "google",
+  //     addDefaultCallbackUrl: false,
+  //   },
+
+  //   sessionRefresh: {
+  //     enablePeriodically: false,
+  //     enableOnWindowFocus: false,
+  //   },
+  // },
   runtimeConfig: {
     public: {
       supabaseUrl: process.env.SUPABASE_URL,
       paymobPublickKey: process.env.PAYMOB_PUBLIC_KEY,
       googleClientId: process.env.GOOGLE_CLIENT_ID,
       websiteUrl: process.env.WEBSITE_URL,
+      notificationApiClientId: process.env.NOTIFICATION_API_CLIENT_ID,
     },
+    notificationApiClientSecret: process.env.NOTIFICATION_API_CLIENT_SECRET,
     supabaseKey: process.env.SUPABASE_KEY,
     supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
     jwtSecret: process.env.JWT_SECRET,
@@ -109,7 +73,7 @@ export default defineNuxtConfig({
      * Directory that the component lives in.
      * @default "./components/ui"
      */
-    componentDir: path.resolve("~/components/ui"),
+    componentDir: "~/components/ui",
   },
 
   routeRules: {
@@ -121,6 +85,6 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
-    preset: "node-server",
+    preset: "vercel",
   },
 });

@@ -31,4 +31,7 @@ watch(isOpenSidebar, (newValue) => {
     document.body.classList.remove("overflow-hidden");
   }
 });
+definePageMeta({
+  middleware: "auth",
+});
 </script>

@@ -29,7 +29,7 @@ export class Users {
     try {
       const { data, error } = await this.supabase
         .from("users")
-        .select("id,phone,first_name,last_name,avatar")
+        .select("id,phone,email,first_name,last_name,avatar")
         .eq("phone", phone)
         .maybeSingle<User>();
 
@@ -48,13 +48,27 @@ export class Users {
     try {
       const { data, error } = await this.supabase
         .from("users")
-        .select("id,phone,first_name,last_name,avatar")
+        .select("id,phone,email,first_name,last_name,avatar")
         .eq("email", email)
         .maybeSingle<User>();
       if (error) {
         throw new Error(error?.details || "bad request or not found");
       }
       return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getUserByContactSource(
+    contact_source: string
+  ): Promise<Omit<User, "created_at"> | null> {
+    try {
+      const userByPhone = await this.getUserByPhone(contact_source);
+      if (userByPhone) return userByPhone;
+      const userByEmail = await this.getUserByEmail(contact_source);
+      if (userByEmail) return userByEmail;
+      return null;
     } catch (error) {
       throw error;
     }

@@ -3,17 +3,22 @@ import { ResponseSchema } from "~/server/utils/response-schema";
 export default defineEventHandler(async (event) => {
   try {
     if (event.method === "POST") {
-      const body = await readBody(event);
-      if (!body || Object.values(body)?.some((value) => !value)) {
-        throw new Error("bad request");
+      const body = await readBody<{ contact_source: string; code: string }>(
+        event
+      );
+      if (!body.contact_source || !body.code) {
+        throw new Error(
+          "Please provide contact_source (Email or phone number) and otp code"
+        );
       }
-      const { phone, code } = body;
-      const isVerified = await otp.verifyOtp(phone, code);
-      if (isVerified?.id) {
-        await otp.deleteOtp(phone, code);
-      }
+      const { contact_source, code } = body;
+      const isVerified = await otp.verifyOtp(contact_source, code);
 
-      return new ResponseSchema(isVerified, true, "OTP verified successfully");
+      return new ResponseSchema(
+        isVerified.isValid,
+        true,
+        "OTP verified successfully"
+      );
     }
     return createError({
       statusCode: 405,

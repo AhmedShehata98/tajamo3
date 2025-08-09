@@ -3,22 +3,25 @@ import { TokenPayload } from "~/types/tokens";
 
 export default defineEventHandler(async (event) => {
   try {
-    const cookies = parseCookies(event);
+    const authorizationHeader = getHeader(event, "Authorization");
     const jwtSecret = useRuntimeConfig(event).jwtSecret;
 
     if (event.method === "GET") {
-      if (!cookies.token) {
+      const [type, token] = authorizationHeader?.split(" ") || [];
+
+      if (!authorizationHeader || type !== "Bearer" || !token) {
         return createError({
           statusCode: 401,
-          statusMessage: "Unauthorized",
+          statusMessage:
+            "Authentication credentials were not provided or are invalid",
         });
       }
-      const decoded = jwt.verify(cookies.token, jwtSecret) as TokenPayload;
+      const decoded = jwt.verify(token, jwtSecret) as TokenPayload;
 
       if (!("id" in decoded)) {
         return createError({
           statusCode: 400,
-          statusMessage: "cannot get user id from token",
+          statusMessage: "cannot get user from token",
         });
       }
       const user = await users.getUserById(decoded.id);

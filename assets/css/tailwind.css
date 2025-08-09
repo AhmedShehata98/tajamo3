@@ -92,9 +92,11 @@
   --sidebar-width: 15rem;
   --event-color-event: #e8ae0f;
   --event-color-webinar: #06bbb2;
-  --event-color-workshop: #d27d06;
+  --event-color-workshop: #b706d2;
   --container-width: 1080px;
   --container-padding: 0px;
+  --landing-page-header: 65px;
+  --dashboard-header-height: 75px;
 }
 
 .dark {
@@ -231,6 +233,24 @@
   .glass-card {
     @apply bg-(--card) border-[1.5px] border-(--border) rounded-xl p-4 backdrop-blur-sm;
     box-shadow: 0px 20px 24px -4px #10182814;
+  }
+  .bg-success {
+    @apply bg-emerald-700;
+  }
+  .bg-success-soft {
+    @apply bg-emerald-700/15;
+  }
+  .bg-warning {
+    @apply bg-orange-400;
+  }
+  .bg-warning-soft {
+    @apply bg-orange-500/15;
+  }
+  .bg-error {
+    @apply bg-red-700;
+  }
+  .bg-error-soft {
+    @apply bg-red-700/15;
   }
 }
 

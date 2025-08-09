@@ -7,8 +7,6 @@ export type User = {
   created_at?: string;
   avatar?: string;
   email: string;
-  country: string;
-  city: string;
 };
 
 export type UserForm = Omit<User, "id" | "created_at" | "is_verified">;

@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2" :class="error && 'items-start mt-2'">
       <!-- Country Code Select -->
       <div class="relative">
         <button
@@ -36,7 +36,8 @@
             <button
               v-for="country in filteredCountries"
               :key="country.code"
-              @click="selectCountry(country)"
+              @click="$emit('update:countryCode', country.code)"
+              @blur="emit('blur:countryCode')"
               class="w-full px-4 py-2 text-left hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2"
             >
               <Icon :name="country.flag" class="w-5 h-5" />
@@ -46,7 +47,6 @@
           </div>
         </div>
       </div>
-
       <!-- Phone Number Input -->
       <div class="flex-1">
         <input
@@ -54,7 +54,13 @@
           pattern="\d*"
           inputmode="numeric"
           :value="phoneNumber"
-          @input="handlePhoneInput"
+          @change="
+            $emit(
+              'update:phoneNumber',
+              ($event.target as HTMLInputElement).value
+            )
+          "
+          @blur="emit('blur:phoneNumber')"
           :placeholder="placeholder"
           class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 text-gray-900 placeholder:text-gray-400 bg-gray-50"
           :class="{ 'border-red-500': error }"
@@ -75,7 +81,7 @@ interface Country {
 }
 
 const props = defineProps<{
-  modelValue: string;
+  phoneNumber: string;
   countryCode: string;
   placeholder?: string;
   error?: string;
@@ -83,8 +89,10 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "update:modelValue", value: string): void;
+  (e: "update:phoneNumber", value: string): void;
   (e: "update:countryCode", value: string): void;
+  (e: "blur:phoneNumber"): void;
+  (e: "blur:countryCode"): void;
 }>();
 
 const isOpen = ref(false);
@@ -116,16 +124,6 @@ const filteredCountries = computed(() => {
       country.name.toLowerCase().includes(query) || country.code.includes(query)
   );
 });
-
-const selectCountry = (country: Country) => {
-  emit("update:countryCode", country.code);
-  isOpen.value = false;
-};
-
-const handlePhoneInput = (event: Event) => {
-  const input = event.target as HTMLInputElement;
-  emit("update:modelValue", input.value);
-};
 
 // Close dropdown when clicking outside
 const handleClickOutside = (event: MouseEvent) => {

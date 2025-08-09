@@ -19,14 +19,12 @@ export default defineEventHandler(async (event) => {
         !body.first_name ||
         !body.last_name ||
         !body.phone ||
-        !body.email ||
-        !body.country ||
-        !body.city
+        !body.email
       ) {
         return createError({
           statusCode: 400,
           statusMessage:
-            "Required fields are missing (first_name, last_name, phone, email,country, city)",
+            "Required fields are missing (first_name, last_name, phone, email)",
         });
       }
 

@@ -1,69 +1,66 @@
 <template>
   <header
-    class="sticky top-0 left-0 z-50 isolate w-full h-(--header-height) flex items-center justify-between px-4 py-3 border-b bg-transparent backdrop-blur-md border-border"
+    class="sticky top-0 left-0 z-50 isolate w-full h-(--dashboard-header-height) flex items-center justify-between px-4 py-3 border-b bg-transparent backdrop-blur-md border-border"
   >
-    <div class="app-container flex items-center justify-between">
-      <nuxt-link href="/">
-        <h3 class="text-xl font-semibold uppercase text-primary">Tajamou</h3>
+    <div class="app-container relative flex items-center justify-between gap-3">
+      <nuxt-link href="/dashboard" class="text-2xl font-bold text-primary">
+        Tajamu
       </nuxt-link>
-      <div class="flex items-center justify-start gap-4">
-        <nav class="hidden lg:flex item-center justify-center gap-1">
-          <nuxt-link
-            href="/dashboard"
-            class="px-4 py-1.5 text-primary font-semibold text-sm capitalize rounded-full"
-            :class="{
-              'bg-primary/90 text-white':
-                route.path.includes('/dashboard') &&
-                route.path === '/dashboard',
-            }"
-          >
-            home
-          </nuxt-link>
-          <nuxt-link
-            href="/dashboard/events"
-            class="px-4 py-1.5 text-primary font-semibold text-sm capitalize rounded-full"
-            :class="{
-              'bg-primary/90 text-white':
-                route.path.includes('/dashboard/events'),
-            }"
-          >
-            events
-          </nuxt-link>
-          <nuxt-link
-            href="/dashboard/orders"
-            class="px-4 py-1.5 text-primary font-semibold text-sm capitalize rounded-full"
-            :class="{
-              'bg-primary/90 text-white':
-                route.path.includes('/dashboard/orders'),
-            }"
-          >
-            orders
-          </nuxt-link>
-          <nuxt-link
-            href="/dashboard/tickets"
-            class="px-4 py-1.5 text-primary font-semibold text-sm capitalize rounded-full"
-            :class="{
-              'bg-primary/90 text-white':
-                route.path.includes('/dashboard/ticket'),
-            }"
-          >
-            tickets
-          </nuxt-link>
-          <nuxt-link
-            href="/dashboard/settings"
-            class="px-4 py-1.5 text-primary font-semibold text-sm capitalize rounded-full"
-            :class="{
-              'bg-primary/90 text-white': route.path.includes(
-                '/dashboard/settings'
-              ),
-            }"
-          >
-            settings
-          </nuxt-link>
-        </nav>
-      </div>
-      <div class="relative flex items-center max-md:ms-auto max-md:pe-3 gap-4">
-        <div class="flex items-center justify-center gap-2">
+      <nav
+        ref="mobileMenuRef"
+        class="flex items-center justify-start gap-2 transition-all duration-300 max-lg:fixed max-lg:top-(--dashboard-header-height) max-lg:left-0 max-lg:w-full max-lg:bg-white max-lg:z-50 max-lg:flex-col max-lg:gap-2 max-lg:px-4 max-lg:py-3"
+        :class="
+          !isOpenMobileMenu &&
+          'max-lg:-translate-y-4 max-lg:opacity-0 max-lg:pointer-events-none max-lg:scale-99'
+        "
+      >
+        <nuxt-link
+          href="/dashboard"
+          class="text-sm px-3 py-2 capitalize font-semibold text-gray-700 rounded-full max-lg:w-full max-lg:py-3.5 max-lg:rounded-sm"
+          :class="
+            route.fullPath === '/dashboard'
+              ? '!text-primary bg-primary/15'
+              : 'hover:bg-primary/10'
+          "
+        >
+          Home
+        </nuxt-link>
+        <nuxt-link
+          href="/dashboard/events"
+          class="text-sm px-3 py-2 capitalize font-semibold text-gray-700 rounded-full max-lg:w-full max-lg:py-3.5 max-lg:rounded-sm"
+          :class="
+            route.fullPath.includes('/events')
+              ? '!text-primary bg-primary/15'
+              : 'hover:bg-primary/10'
+          "
+        >
+          events
+        </nuxt-link>
+        <nuxt-link
+          href="/dashboard/orders"
+          class="text-sm px-3 py-2 capitalize font-semibold text-gray-700 rounded-full max-lg:w-full max-lg:py-3.5 max-lg:rounded-sm"
+          :class="
+            route.fullPath.includes('/orders')
+              ? '!text-primary bg-primary/15'
+              : 'hover:bg-primary/10'
+          "
+        >
+          orders
+        </nuxt-link>
+        <nuxt-link
+          href="/dashboard/tickets"
+          class="text-sm px-3 py-2 capitalize font-semibold text-gray-700 rounded-full max-lg:w-full max-lg:py-3.5 max-lg:rounded-sm"
+          :class="
+            route.fullPath.includes('/tickets')
+              ? '!text-primary bg-primary/15'
+              : 'hover:bg-primary/10'
+          "
+        >
+          tickets
+        </nuxt-link>
+      </nav>
+      <div class="flex items-center gap-4 max-lg:ms-auto">
+        <div class="flex items-center justify-center gap-2 max-lg:hidden">
           <UiDashboardHeaderNotificationSheet>
             <button
               type="button"
@@ -85,120 +82,108 @@
             <Icon name="heroicons:moon" class="text-xl" />
           </button>
         </div>
-        <!-- user menu start -->
-        <div class="relative">
-          <button @click="openUserMenu = !openUserMenu">
-            <span class="relative flex item-center justify-center gap-2">
-              <p
-                class="hidden md:inline-block place-self-center text-sm font-semibold capitalize leading-3 cursor-pointer"
-              >
-                {{ fullName }}
-              </p>
-              <!-- Temporarily replaced nuxt-img with standard img tag due to @nuxt/image initialization issue -->
-
-              <img
-                v-if="userStore?.avatar"
-                src="https://picsum.photos/200"
-                alt="avatar"
-                width="40"
-                height="40"
-                class="w-10 h-10 object-cover rounded-full"
-              />
-              <h4
-                class="size-9 md:size-10 flex items-center justify-center text-xl font-medium uppercase text-white bg-secondary rounded-full"
-              >
-                {{ getInitialLetters(fullName) }}
-              </h4>
-            </span>
-          </button>
-          <div
-            ref="userMenuRef"
-            class="absolute isolate top-full right-0 md:right-8 z-20 w-56 p-2 mt-2 border border-(--border) shadow-xl rounded-md bg-background transition-all duration-300"
-            :class="
-              openUserMenu ? '' : '-translate-y-4 pointer-events-none opacity-0'
-            "
-          >
-            <p class="text-center py-2 font-semibold">My Account</p>
-            <hr />
-            <ul class="w-full grid grid-auto-rows gapy-2 py-1">
-              <li
-                v-for="item in USER_MENU_ITEMS"
-                class="w-full py-1 px-1.5 flex item-center justify-between hover:bg-purple-100 hover:text-primary rounded-md"
-              >
+        <UiDropdownMenu>
+          <UiDropdownMenuTrigger as-child>
+            <p
+              class="text-sm font-semibold capitalize leading-3 cursor-pointer max-lg:hidden"
+            >
+              {{ `${user?.first_name || "N"} ${user?.last_name || "A"}` }}
+            </p>
+            <nuxt-img
+              src="https://picsum.photos/200"
+              alt="avatar"
+              width="40"
+              height="40"
+              class="max-md:size-9 size-10 object-cover rounded-full"
+            />
+          </UiDropdownMenuTrigger>
+          <UiDropdownMenuContent class="w-56">
+            <UiDropdownMenuLabel class="text-center"
+              >My Account</UiDropdownMenuLabel
+            >
+            <UiDropdownMenuSeparator />
+            <UiDropdownMenuGroup>
+              <UiDropdownMenuItem>
                 <NuxtLink
-                  :href="item.href"
+                  to="/profile"
                   class="w-full flex items-center justify-between gap-2"
                 >
-                  <p class="text-inherit">{{ item.label }}</p>
-                  <span class="flex item-center justify-center">
-                    <Icon :name="item.icon" class="text-xl" />
-                  </span>
+                  <small>Profile</small>
+                  <UiDropdownMenuShortcut>
+                    <Icon name="heroicons:user" class="text-xl" />
+                  </UiDropdownMenuShortcut>
                 </NuxtLink>
-              </li>
-            </ul>
-            <hr />
-            <li
-              class="w-full py-1 px-1.5 flex item-center justify-between hover:bg-purple-100 hover:text-primary rounded-md mt-2"
-            >
+              </UiDropdownMenuItem>
+              <UiDropdownMenuItem>
+                <NuxtLink
+                  to="/settings"
+                  class="w-full flex items-center justify-between gap-2"
+                >
+                  <small>Settings</small>
+                  <UiDropdownMenuShortcut>
+                    <Icon name="heroicons:cog-6-tooth" class="text-xl" />
+                  </UiDropdownMenuShortcut>
+                </NuxtLink>
+              </UiDropdownMenuItem>
+            </UiDropdownMenuGroup>
+            <UiDropdownMenuSeparator />
+            <UiDropdownMenuItem variant="destructive">
               <button
                 type="button"
                 @click="handleLogout"
-                class="w-full flex items-center justify-between gap-2"
+                class="w-full flex items-center justify-between gap-2 cursor-pointer"
               >
-                <p class="text-inherit">Log out</p>
-                <span class="flex item-center justify-center">⇧⌘Q</span>
+                <small>Log out</small>
+                <UiDropdownMenuShortcut>⇧⌘Q</UiDropdownMenuShortcut>
               </button>
-            </li>
-          </div>
-        </div>
+            </UiDropdownMenuItem>
+          </UiDropdownMenuContent>
+        </UiDropdownMenu>
       </div>
-      <button
-        type="button"
-        class="flex items-center justify-center w-10 h-10 rounded-md hover:bg-muted transition-colors lg:hidden"
-        @click="openMobileMenu = !openMobileMenu"
-      >
-        <Icon
-          :name="openMobileMenu ? 'iconamoon:close-fill' : 'gg:menu-right-alt'"
-          class="text-3xl text-muted-foreground max-md:hidden"
-        />
-      </button>
+      <div class="lg:hidden flex items-center justify-start gap-4">
+        <button
+          type="button"
+          class="flex items-center justify-center w-10 h-10 rounded-md hover:bg-muted transition-colors"
+          @click="$emit('toggle-sidebar')"
+        >
+          <Icon
+            :name="
+              isOpenMobileMenu
+                ? 'iconamoon:close-fill'
+                : 'heroicons:bars-3-center-left-20-solid'
+            "
+            @click="isOpenMobileMenu = !isOpenMobileMenu"
+            class="text-3xl text-muted-foreground max-md:hidden"
+          />
+        </button>
+      </div>
     </div>
   </header>
-  <MobileNavMenu
-    :class="
-      openMobileMenu
-        ? ''
-        : 'pointer-events-none translate-x-full opacity-10 scale-98'
-    "
-    @close="openMobileMenu = false"
-  />
 </template>
 <script setup lang="ts">
 import { onClickOutside } from "@vueuse/core";
 import { toast } from "vue-sonner";
-import useUser from "~/composables/use-user";
+import { getUserState, setUserState } from "~/stores/user";
 
-const USER_MENU_ITEMS = [
-  {
-    label: "settings",
-    href: "/dashboard/settings",
-    icon: "heroicons:cog-6-tooth",
-  },
-];
-const userMenuTarget = useTemplateRef<HTMLElement>("userMenuRef");
-const { userStore, fullName, logout } = useUser();
-const openUserMenu = shallowRef<boolean>(false);
-const openMobileMenu = shallowRef<boolean>(false);
-const route = useRoute();
+const user = getUserState();
+const token = useCookie("token");
 const { unreadCount: unreadNotificationsCount } = useNotifications();
-
-onClickOutside(userMenuTarget, () => (openUserMenu.value = false));
+const isOpenMobileMenu = shallowRef(false);
+const route = useRoute();
+const mobileMenuRef = ref<HTMLDivElement | null>(null);
+onClickOutside(mobileMenuRef, () => {
+  isOpenMobileMenu.value = false;
+});
 
 const handleLogout = async () => {
   try {
-    await logout();
-    navigateTo("/");
-    toast.success("Logged out successfully");
+    token.value = null;
+    setUserState(null);
+    toast.success("Logged out successfully", {
+      onAutoClose: () => navigateTo("/login"),
+      richColors: true,
+      duration: 2000,
+    });
   } catch (error) {
     toast.error("Failed to logout");
     console.error(error);

@@ -20,14 +20,13 @@ export class Otp {
     return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${sign}${tzHours}:${tzMinutes}`;
   }
 
-  private generateOtp(length: number = 6) {
-    return Math.floor(
-      10 ** (length - 1) + Math.random() * 9 * 10 ** (length - 1)
-    ).toString();
+  private generateOtp() {
+    const min = 100000;
+    const max = 999999;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-  async createOtp(phone: string) {
+  async createOtp(contact_source: string, code: string) {
     try {
-      const otp = this.generateOtp();
       const expires_at = this.toLocalISOStringWithTZ(
         new Date(Date.now() + 1000 * 60 * 5)
       );
@@ -35,20 +34,17 @@ export class Otp {
       const { data, error } = await this.supabase
         .from("otp_codes")
         .insert({
-          code: otp,
-          phone,
+          code,
+          contact_source,
           expires_at,
           created_at: now,
         })
-        .select("id,code,phone,expires_at,created_at")
-        .single<{
-          id: string;
-          code: string;
-          expires_at: string;
-          phone: string;
-          created_at: string;
-        }>();
+        .select("id,contact_source,expires_at")
+        .single<OtpType>();
       if (error) {
+        if (error.message.match(/unique constraint/i)) {
+          throw new Error("OTP already exists for this contact");
+        }
         throw new Error(error?.message || "bad request");
       }
       return data;
@@ -57,19 +53,22 @@ export class Otp {
     }
   }
 
-  async deleteOtp(phone: string, code: string) {
+  async deleteOtp(
+    contact_source: string,
+    code: string
+  ): Promise<{ isDeleted: boolean }> {
     try {
       const { data, error } = await this.supabase
         .from("otp_codes")
         .delete()
-        .eq("phone", phone)
+        .eq("contact_source", contact_source)
         .eq("code", code)
         .select("id")
         .single();
       if (error) {
         throw new Error(error?.message || "bad request");
       }
-      return data;
+      return { isDeleted: Boolean(data) };
     } catch (error) {
       throw new Error(
         error instanceof Error ? error.message : "internal server error"
@@ -83,79 +82,9 @@ export class Otp {
         .from("otp_codes")
         .delete()
         .eq("id", id)
-        .select("id,code,expires_at,phone,created_at,is_used")
+        .select("id,code,expires_at,contact_source,created_at,is_used")
         .single<OtpType>();
 
-      if (error) {
-        throw new Error(error?.message || "bad request");
-      }
-      return data;
-    } catch (error) {
-      throw new Error(
-        error instanceof Error ? error.message : "internal server error"
-      );
-    }
-  }
-
-  async updateOtp(form: OtpType): Promise<OtpType> {
-    try {
-      const { id, ...rest } = form;
-      const { data, error } = await this.supabase
-        .from("otp_codes")
-        .update(rest)
-        .eq("id", id)
-        .select("id,code,expires_at,phone,created_at,is_used")
-        .single<OtpType>();
-
-      if (error) {
-        throw new Error(error?.message || "bad request");
-      }
-      return data;
-    } catch (error) {
-      throw new Error(
-        error instanceof Error ? error.message : "internal server error"
-      );
-    }
-  }
-  async getByPhoneNumber(phone: string, code: string): Promise<OtpType | null> {
-    try {
-      const now = this.toLocalISOStringWithTZ(new Date());
-
-      const { data, error } = await this.supabase
-        .from("otp_codes")
-        .select("id,code,expires_at,phone,created_at")
-        .eq("phone", phone)
-        .eq("code", code)
-        .single<OtpType>();
-
-      if (error) {
-        throw new Error(error?.message || "bad request");
-      }
-      if (!data) {
-        throw new Error("OTP not found");
-      }
-      if (now > data.expires_at) {
-        throw new Error("OTP expired, try to generate a new one");
-      }
-      return data;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async getByEmail(email: string): Promise<OtpType | null> {
-    try {
-      const now = this.toLocalISOStringWithTZ(new Date());
-
-      const { data, error } = await this.supabase
-        .from("otp_codes")
-        .select("id,code,expires_at")
-        .eq("email", email)
-        .single<OtpType>();
-
-      if (data && now > data?.expires_at) {
-        throw new Error("OTP expired try to generate a new one");
-      }
       if (error) {
         throw new Error(error?.message || "bad request");
       }
@@ -168,22 +97,25 @@ export class Otp {
   }
 
   async verifyOtp(
-    phone: string,
+    contact_source: string,
     code: string
-  ): Promise<{ id: string | undefined }> {
+  ): Promise<{ id: string | undefined; isValid: boolean }> {
     try {
       const { data, error } = await this.supabase
         .from("otp_codes")
-        .select("id")
-        .eq("phone", phone)
+        .select("*")
+        .eq("contact_source", contact_source)
         .eq("code", code)
         .order("created_at", { ascending: false })
         .limit(1);
-      console.log(data);
+
       if (error) {
         throw new Error(error?.message || "bad request");
       }
-      return { id: data?.[0]?.id as string | undefined };
+      return {
+        id: data?.[0]?.id as string | undefined,
+        isValid: Boolean(data?.[0]?.contact_source) && Boolean(data?.[0]?.code),
+      };
     } catch (error) {
       throw new Error(
         error instanceof Error ? error.message : "internal server error"
