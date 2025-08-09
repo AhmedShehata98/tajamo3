@@ -110,8 +110,8 @@
                   placeholder="Enter your phone number"
                   @blur:phone-number="phoneNumberAttrs.onBlur()"
                   @blur:country-code="countryCodeAttrs.onBlur()"
-                  v-model:country-code="countryCode as string"
-                  v-model:phone-number="phoneNumber as string"
+                  v-model:country-code="countryCode!"
+                  v-model:phone-number="phoneNumber!"
                   :error="phoneNumberAttrs.phoneNumberError"
                 />
               </div>
@@ -126,7 +126,7 @@
                 </label>
                 <input
                   type="email"
-                  placeholder="Enter your email (optional)"
+                  placeholder="Enter your email "
                   class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 text-gray-900 placeholder:text-gray-400 bg-gray-50"
                   name="email"
                   id="email"
