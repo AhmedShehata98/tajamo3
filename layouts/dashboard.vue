@@ -8,6 +8,7 @@
   </main>
 </template>
 <script setup lang="ts">
+const route = useRoute();
 const {
   setup: setupNotificationsEventSource,
   close: closeNotificationsEventSource,
@@ -15,13 +16,14 @@ const {
 
 const isOpenSidebar = shallowRef(false);
 
-// FIXME: this layout is remounted on every page navigation, which causes the EventSource to be re-established.
-// This is not ideal, but for now, we will keep it as is.
+// console.log("route:");
+
 onMounted(() => {
   setupNotificationsEventSource();
 });
-// onBeforeUnmount(() => {
-//   closeNotificationsEventSource();
+
+// onUnmounted(() => {
+// closeNotificationsEventSource();
 // });
 
 watch(isOpenSidebar, (newValue) => {

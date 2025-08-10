@@ -28,6 +28,7 @@
             Fill in the form below to create a new account
           </p>
         </div>
+        <!-- Register State: Verified -->
         <div v-if="registerState === 'verified'">
           <span class="flex items-center justify-center text-9xl mb-5">
             <Icon name="emojione:party-popper" />
@@ -39,7 +40,6 @@
             redirecting to dashboard ...
           </p>
         </div>
-
         <KeepAlive name="register-form">
           <form @submit.prevent="onSubmit" class="space-y-6">
             <!-- core Info -->
@@ -106,14 +106,32 @@
                   class="text-gray-700 font-semibold text-sm text-start block capitalize"
                   >Phone Number</label
                 >
-                <UiPhoneInput
-                  placeholder="Enter your phone number"
-                  @blur:phone-number="()=>phoneNumberAttrs.onBlur()"
-                  @blur:country-code="()=>countryCodeAttrs.onBlur()"
-                  v-model:country-code="countryCode!"
-                  v-model:phone-number="phoneNumber!"
-                  :error="phoneNumberAttrs.phoneNumberError"
-                />
+                <UiPhoneNumberWrapper>
+                  <template #countryCode>
+                    <UiPhoneNumberCountryInput
+                      v-model="countryCode"
+                      @blur="countryCodeAttrs.onBlur()"
+                    />
+                  </template>
+                  <template #phoneNumber>
+                    <UiPhoneNumberPhoneInput
+                      placeholder="phone number"
+                      v-model="phoneNumber"
+                      @blur="phoneNumberAttrs.onBlur()"
+                      @change="phoneNumberAttrs.onChange()"
+                      @input="phoneNumberAttrs.onInput()"
+                      :error="phoneNumberAttrs.phoneNumberError"
+                    />
+                  </template>
+                  <template #error>
+                    <p
+                      v-if="phoneNumberAttrs.phoneNumberError"
+                      class="mt-1 text-sm text-red-500"
+                    >
+                      {{ phoneNumberAttrs.phoneNumberError }}
+                    </p>
+                  </template>
+                </UiPhoneNumberWrapper>
               </div>
               <span
                 class="w-full flex flex-col items-start justify-start gap-2"

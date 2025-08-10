@@ -84,7 +84,4 @@ export default defineNuxtConfig({
       ssr: false, // Disable SSR for all nested routes
     },
   },
-  nitro: {
-    preset: "vercel",
-  },
 });
