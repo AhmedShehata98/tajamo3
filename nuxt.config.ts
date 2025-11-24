@@ -14,6 +14,15 @@ export default defineNuxtConfig({
     // "@sidebase/nuxt-auth",
   ],
   // plugins: ["~/plugins/supabase.ts"],
+  components: [
+    {
+      path: "~/components/ui",
+      pathPrefix: false,
+      ignore: ["**/index.ts"],
+    },
+    "~/components",
+  ],
+  exclude: ["~/components/ui"],
   css: ["~/assets/css/tailwind.css"],
   vite: {
     plugins: [tailwindcss()],
